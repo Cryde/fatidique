@@ -20,3 +20,5 @@
 /web/*.map
 /web/*.css
 /node_modules/
+
+hosts.yml
