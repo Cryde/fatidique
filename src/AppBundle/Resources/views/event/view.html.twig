@@ -1,0 +1,39 @@
+{% extends '@App/base.html.twig' %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>{{ event.label }}</h2>
+
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <div id="clock">
+                <div>
+                    <span class="days"></span>
+                    <div class="smalltext">jours</div>
+                </div>
+                <div>
+                    <span class="hours"></span>
+                    <div class="smalltext">heures</div>
+                </div>
+                <div>
+                    <span class="minutes"></span>
+                    <div class="smalltext">minutes</div>
+                </div>
+                <div>
+                    <span class="seconds"></span>
+                    <div class="smalltext">secondes</div>
+                </div>
+            </div>
+
+
+            <p>
+                {{ event.description | nl2br }}
+            </p>
+        </div>
+    </div>
+{% endblock %}
