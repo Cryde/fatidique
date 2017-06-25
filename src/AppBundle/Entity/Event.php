@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity
@@ -27,6 +28,12 @@ class Event
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @Gedmo\Slug(fields={"label"})
+     * @ORM\Column(length=150, unique=true)
+     */
+    private $slug;
 
     /**
      * Get id
@@ -108,5 +115,29 @@ class Event
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     *
+     * @return Event
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }
