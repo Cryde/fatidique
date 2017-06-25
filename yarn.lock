@@ -2381,13 +2381,17 @@ minimist@^1.2.0:
   dependencies:
     minimist "0.0.8"
 
+moment-precise-range@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/moment-precise-range/-/moment-precise-range-0.2.0.tgz#f4c28e2c4ca8af6f06ca6dfdd0dfb843d70071b6"
+
 moment-timezone@^0.4.0:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.4.1.tgz#81f598c3ad5e22cdad796b67ecd8d88d0f5baa06"
   dependencies:
     moment ">= 2.6.0"
 
-"moment@>= 2.6.0", moment@^2.10:
+"moment@>= 2.6.0", moment@^2.10, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 

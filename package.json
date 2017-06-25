@@ -12,6 +12,8 @@
     "bootstrap-datepicker": "^1.6.4",
     "google-maps": "^3.2.1",
     "jquery": "^3.1.1",
+    "moment": "^2.18.1",
+    "moment-precise-range": "^0.2.0",
     "tempusdominus-core": "^5.0.0-alpha6"
   },
   "devDependencies": {
