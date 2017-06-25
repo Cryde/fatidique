@@ -16,6 +16,7 @@
 /vendor/
 /web/bundles/
 
+/web/fonts
 /web/*.js
 /web/*.map
 /web/*.css
