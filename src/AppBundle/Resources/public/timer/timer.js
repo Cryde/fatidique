@@ -14,7 +14,6 @@ export default () => {
 }
 
 function getTimeRemaining(endTime) {
-  console.log(preciseDiff(endTime, new Date(), {returnObject: true}));
   return preciseDiff(endTime, new Date(), {returnObject: true});
 }
 
