@@ -19,6 +19,7 @@
 /web/*.js
 /web/*.map
 /web/*.css
+/web/favicon*
 /node_modules/
 
 hosts.yml
