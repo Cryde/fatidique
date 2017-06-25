@@ -4,6 +4,10 @@ body {
     padding-bottom: 20px;
 }
 
+body, h1, h2, h3, h4, h5, h6, p, div, button, input, textarea {
+    font-family: 'Montserrat', sans-serif;
+}
+
 .header h1 {
     margin-top: 0;
     margin-bottom: 0;
@@ -23,7 +27,7 @@ body {
 /* Customize container */
 @media (min-width: 768px) {
     .container {
-        max-width: 730px;
+        max-width: 760px;
     }
 }
 
