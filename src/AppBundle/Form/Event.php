@@ -15,7 +15,7 @@ class Event extends AbstractType
         $builder
             ->add('date')
             ->add('label', TextType::class)
-            ->add('description', TextareaType::class);
+            ->add('description', TextareaType::class, ['required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
