@@ -1,5 +1,12 @@
 {% extends '@App/base.html.twig' %}
 
+{% block title %}{{ event.label }}{% endblock %}
+
+{%- block description -%}
+    {%- set description = event.description|replace({"\n":' ', "\r":' '})[:156] ~ ' ...' -%}
+    {{ description | length > 10? description : parent() }}
+{%- endblock %}
+
 {% block body %}
 
     <div class="row">
