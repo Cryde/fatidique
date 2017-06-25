@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,14 +34,15 @@ class EventController extends Controller
             $em->persist($event);
             $em->flush();
 
-            return $this->redirectToRoute('event_view', ['id' => $event->getId()]);
+            return $this->redirectToRoute('event_view', ['slug' => $event->getSlug()]);
         }
 
         return $this->render('@App/event/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
-     * @Route("/view/{id}", name="event_view")
+     * @Route("/{slug}", name="event_view")
+     * @ParamConverter("Event", options={"mapping": {"slug": "slug"}})
      *
      * @param Event $event
      *
