@@ -23,7 +23,7 @@ function initializeClock($clock, endTime) {
   const $days = $clock.find('.days');
   const $hours = $clock.find('.hours');
   const $minutes = $clock.find('.minutes');
-  const $secondes = $clock.find('.seconds');
+  const $seconds = $clock.find('.seconds');
 
   function updateClock() {
     const t = getTimeRemaining(endTime);
@@ -33,7 +33,7 @@ function initializeClock($clock, endTime) {
     $days.text(t.days);
     $hours.text(('0' + t.hours).slice(-2));
     $minutes.text(('0' + t.minutes).slice(-2));
-    $secondes.text(('0' + t.seconds).slice(-2));
+    $seconds.text(('0' + t.seconds).slice(-2));
 
     if (t.total <= 0) {
       clearInterval(timeInterval);
