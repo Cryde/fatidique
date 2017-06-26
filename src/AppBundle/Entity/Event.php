@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -17,6 +18,7 @@ class Event
      */
     private $id;
     /**
+     * @Assert\GreaterThan("now")
      * @ORM\Column(type="datetime")
      */
     private $date;
