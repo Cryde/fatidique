@@ -13,7 +13,13 @@ class Event extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date')
+            ->add('date', TextType::class, [
+                'attr' =>
+                    [
+                        'class' => 'js-datetime-picker datetimepicker-input',
+                        'data-toggle' => 'datetimepicker', 'data-target' => '.js-datetime-picker'
+                    ]
+            ])
             ->add('label', TextType::class)
             ->add('description', TextareaType::class, ['required' => false]);
     }

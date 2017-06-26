@@ -39,12 +39,13 @@ module.exports = {
   npm: {
     globals: {
        'jQuery' : 'jquery',
+       'moment' : 'moment',
        'bootstrap' : 'bootstrap'
     },
     styles: {
       select2: ['dist/css/select2.css'],
       'bootstrap': ['dist/css/bootstrap.css'],
-      'bootstrap-datepicker': ['dist/css/bootstrap-datepicker3.css']
+      'tempusdominus-bootstrap-3': ['build/css/tempusdominus-bootstrap-3.css']
     }
   },
   modules: {
