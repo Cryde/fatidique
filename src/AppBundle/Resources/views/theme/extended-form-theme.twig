@@ -1,0 +1,11 @@
+{% use "bootstrap_3_horizontal_layout.html.twig" %}
+
+{% block form_errors -%}
+    {% if errors|length > 0 -%}
+        {% if form.parent %}<span class="help-block"><i class="fa fa-exclamation-triangle"></i> {% else %}<div class="alert alert-danger">{% endif %}
+        {% for error in errors -%}
+             {{ error.message }}<br/>
+        {%- endfor -%}
+        {% if form.parent %}</span>{% else %}</div>{% endif %}
+    {%- endif %}
+{%- endblock form_errors %}
