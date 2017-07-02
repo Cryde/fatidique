@@ -29,9 +29,8 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    # Externals services
     kotchuprik\short_id\ShortId: ~
 
-    # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+imports:
+    - resource: "services-repository.yml"

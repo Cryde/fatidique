@@ -11,8 +11,13 @@
 
     <div class="row marketing">
         <div class="col-lg-6">
-            <h3>Les derniers compteurs</h3>
-            <p>TODO</p>
+            <h3>Nouveautés</h3>
+            <p>
+                {# @var event \AppBundle\Entity\Event #}
+                {% for event in lastEvents %}
+                    <a href="{{ path('event_view', {slug: event.slug}) }}">{{ event.label }}</a> <br/>
+                {% endfor %}
+            </p>
         </div>
 
         <div class="col-lg-6">

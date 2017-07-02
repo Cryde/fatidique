@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
+use AppBundle\Entity\Repository\EventRepository;
 use AppBundle\Service\SlugRandomize;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -14,9 +15,11 @@ class EventController extends Controller
     /**
      * @Route("/", name="homepage")
      */
-    public function indexAction()
+    public function indexAction(EventRepository $eventRepository)
     {
-        return $this->render('@App/event/index.html.twig');
+        $lastEvents = $eventRepository->findLastPublicEvents();
+
+        return $this->render('@App/event/index.html.twig', ['lastEvents' => $lastEvents]);
     }
 
     /**
