@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "09bd0d24e860f2d9265b80537255644a",
+    "content-hash": "42280e6e9f489b64ef0faf601a857c20",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1245,6 +1245,39 @@
                 "sql"
             ],
             "time": "2014-01-12T16:20:24+00:00"
+        },
+        {
+            "name": "kotchuprik/php-short-id",
+            "version": "1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kotchuprik/php-short-id.git",
+                "reference": "7d730f026b9a6a6fcff5c766e2c193752e6e7f51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kotchuprik/php-short-id/zipball/7d730f026b9a6a6fcff5c766e2c193752e6e7f51",
+                "reference": "7d730f026b9a6a6fcff5c766e2c193752e6e7f51",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "kotchuprik\\short_id\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Constantine Chuprik",
+                    "email": "constantinchuprik@gmail.com"
+                }
+            ],
+            "description": "Yet another Short ID generator. The library help you generate short id like youtube, vimeo, bit.ly, etc.",
+            "time": "2016-03-25T08:15:12+00:00"
         },
         {
             "name": "monolog/monolog",

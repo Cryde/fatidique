@@ -25,6 +25,7 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "doctrine/orm": "^2.5",
         "incenteev/composer-parameter-handler": "^2.0",
+        "kotchuprik/php-short-id": "^1.1",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^3.0.2",
         "stof/doctrine-extensions-bundle": "^1.2",

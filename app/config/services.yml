@@ -29,6 +29,8 @@ services:
         public: true
         tags: ['controller.service_arguments']
 
+    kotchuprik\short_id\ShortId: ~
+
     # add more services, or override services that need manual wiring
     # AppBundle\Service\ExampleService:
     #     arguments:

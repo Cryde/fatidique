@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
+use AppBundle\Service\SlugRandomize;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -21,7 +22,7 @@ class EventController extends Controller
     /**
      * @Route("/create", name="event_create")
      */
-    public function createAction(Request $request)
+    public function createAction(SlugRandomize $slugRandomize, Request $request)
     {
         $event = new Event();
         $form  = $this->createForm(\AppBundle\Form\Event::class, $event);
@@ -31,6 +32,7 @@ class EventController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            $slugRandomize->setEvent($event)->randomizeSlug();
             $em->persist($event);
             $em->flush();
 
