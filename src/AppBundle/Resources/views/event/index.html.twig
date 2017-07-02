@@ -23,8 +23,13 @@
         </div>
 
         <div class="col-lg-6">
-            <h3>Les compteurs qui arrivent bientôt à échéance</h3>
-            <p>TODO</p>
+            <h3>Moments fatidique</h3>
+            <p>
+                {# @var event \AppBundle\Entity\Event #}
+                {% for event in almostEndedEvents %}
+                    <a href="{{ path('event_view', {slug: event.slug}) }}">{{ event.label }}</a> <br/>
+                {% endfor %}
+            </p>
         </div>
     </div>
 {% endblock %}

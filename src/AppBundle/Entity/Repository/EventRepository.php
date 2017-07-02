@@ -15,4 +15,16 @@ class EventRepository extends EntityRepository
                     ->getQuery()
                     ->getResult();
     }
+
+    public function findAlmostEndedPublicEvents(int $limit = 5)
+    {
+        return $this->createQueryBuilder('event')
+                    ->orderBy('event.date', 'ASC')
+                    ->where('event.private = 0')
+                    ->andWhere('event.date > CURRENT_DATE()')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
+
 }

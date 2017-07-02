@@ -22,9 +22,13 @@ class EventController extends Controller
      */
     public function indexAction(EventRepository $eventRepository)
     {
-        $lastEvents = $eventRepository->findLastPublicEvents();
-
-        return $this->render('@App/event/index.html.twig', ['lastEvents' => $lastEvents]);
+        return $this->render(
+            '@App/event/index.html.twig',
+            [
+                'lastEvents'        => $eventRepository->findLastPublicEvents(),
+                'almostEndedEvents' => $eventRepository->findAlmostEndedPublicEvents(),
+            ]
+        );
     }
 
     /**
