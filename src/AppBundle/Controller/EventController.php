@@ -9,11 +9,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
     /**
      * @Route("/", name="homepage")
+     *
+     * @param EventRepository $eventRepository
+     *
+     * @return Response
      */
     public function indexAction(EventRepository $eventRepository)
     {
@@ -24,6 +29,11 @@ class EventController extends Controller
 
     /**
      * @Route("/create", name="event_create")
+     *
+     * @param SlugRandomize $slugRandomize
+     * @param Request       $request
+     *
+     * @return Response
      */
     public function createAction(SlugRandomize $slugRandomize, Request $request)
     {
@@ -51,7 +61,7 @@ class EventController extends Controller
      *
      * @param Event $event
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function viewAction(Event $event)
     {
