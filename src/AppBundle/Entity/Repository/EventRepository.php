@@ -11,6 +11,7 @@ class EventRepository extends EntityRepository
         return $this->createQueryBuilder('event')
                     ->orderBy('event.created', 'DESC')
                     ->where('event.private = 0')
+                    ->andWhere('event.date > CURRENT_DATE()')
                     ->setMaxResults($limit)
                     ->getQuery()
                     ->getResult();
@@ -26,5 +27,4 @@ class EventRepository extends EntityRepository
                     ->getQuery()
                     ->getResult();
     }
-
 }
