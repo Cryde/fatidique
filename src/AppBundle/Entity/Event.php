@@ -30,7 +30,10 @@ class Event
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
-
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $private;
     /**
      * @Gedmo\Slug(fields={"label"})
      * @ORM\Column(length=150, unique=true)
@@ -141,5 +144,29 @@ class Event
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set private
+     *
+     * @param boolean $private
+     *
+     * @return Event
+     */
+    public function setPrivate($private)
+    {
+        $this->private = $private;
+
+        return $this;
+    }
+
+    /**
+     * Get private
+     *
+     * @return boolean
+     */
+    public function getPrivate()
+    {
+        return $this->private;
     }
 }
