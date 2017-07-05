@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Event;
 use AppBundle\Form\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -47,7 +48,7 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => \AppBundle\Entity\Event::class,
+                'data_class' => Event::class,
             ]
         );
     }
