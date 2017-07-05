@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Repository\EventRepository;
-use AppBundle\Form\EventType;
+use AppBundle\Form\Type\EventType;
 use AppBundle\Service\SlugRandomize;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;

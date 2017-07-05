@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Form;
+namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Event;
 use AppBundle\Form\DataTransformer\DateTimeToStringTransformer;
