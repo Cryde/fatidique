@@ -1,7 +1,7 @@
 {
-    "name": "jtonneau/fatidique",
+    "name": "cryde/fatidique",
     "description": "",
-    "license": "proprietary",
+    "license": "MIT",
     "type": "project",
     "autoload": {
         "psr-4": {
