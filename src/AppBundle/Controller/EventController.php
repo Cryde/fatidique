@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\Repository\EventRepository;
+use AppBundle\Form\EventType;
 use AppBundle\Service\SlugRandomize;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -42,7 +43,7 @@ class EventController extends Controller
     public function createAction(SlugRandomize $slugRandomize, Request $request)
     {
         $event = new Event();
-        $form  = $this->createForm(\AppBundle\Form\Event::class, $event);
+        $form  = $this->createForm(EventType::class, $event);
 
         $form->handleRequest($request);
 
