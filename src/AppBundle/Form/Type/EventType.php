@@ -5,6 +5,7 @@ namespace AppBundle\Form\Type;
 use AppBundle\Entity\Event;
 use AppBundle\Form\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,7 +30,8 @@ class EventType extends AbstractType
                 'date',
                 TextType::class,
                 [
-                    'attr' =>
+                    'label' => 'form.labels.date',
+                    'attr'  =>
                         [
                             'class'       => 'js-datetime-picker datetimepicker-input',
                             'data-toggle' => 'datetimepicker',
@@ -37,9 +39,9 @@ class EventType extends AbstractType
                         ],
                 ]
             )
-            ->add('label', TextType::class)
-            ->add('description', TextareaType::class, ['required' => false])
-            ->add('private');
+            ->add('label', TextType::class, ['label' => 'form.labels.label'])
+            ->add('description', TextareaType::class, ['required' => false, 'label' => 'form.labels.description'])
+            ->add('private', CheckboxType::class, ['required' => false, 'label' => 'form.labels.private']);
 
         $builder->get('date')->addModelTransformer($this->dateTimeToStringTransformer);
     }
@@ -48,7 +50,8 @@ class EventType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Event::class,
+                'data_class'         => Event::class,
+                'translation_domain' => 'messages',
             ]
         );
     }

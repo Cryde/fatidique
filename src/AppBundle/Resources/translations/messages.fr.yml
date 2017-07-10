@@ -1,0 +1,10 @@
+form:
+  labels:
+    date: Date
+    label: Label
+    description: Description
+    private: Privé ? *
+
+
+note:
+  private: "* Si vous marquez le moment fatidique en 'privé', celui-ci n'apparaitra pas sur la page d'acceuil. Seuls les personnes avec le lien pourront y avoir accès."
