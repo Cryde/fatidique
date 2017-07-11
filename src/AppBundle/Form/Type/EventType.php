@@ -16,11 +16,11 @@ class EventType extends AbstractType
     /**
      * @var DateTimeToStringTransformer
      */
-    private $dateTimeToStringTransformer;
+    private $transformer;
 
-    public function __construct(DateTimeToStringTransformer $dateTimeToStringTransformer)
+    public function __construct(DateTimeToStringTransformer $transformer)
     {
-        $this->dateTimeToStringTransformer = $dateTimeToStringTransformer;
+        $this->transformer = $transformer;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -43,7 +43,7 @@ class EventType extends AbstractType
             ->add('description', TextareaType::class, ['required' => false, 'label' => 'form.labels.description'])
             ->add('private', CheckboxType::class, ['required' => false, 'label' => 'form.labels.private']);
 
-        $builder->get('date')->addModelTransformer($this->dateTimeToStringTransformer);
+        $builder->get('date')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

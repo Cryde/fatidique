@@ -27,6 +27,7 @@ function initializeClock($clock, endTime) {
 
   function updateClock() {
     const t = getTimeRemaining(endTime);
+    const timeInterval = setInterval(updateClock, 1000);
 
     $years.text(t.years);
     $months.text(t.months);
@@ -41,5 +42,4 @@ function initializeClock($clock, endTime) {
   }
 
   updateClock();
-  const timeInterval = setInterval(updateClock, 1000);
 }
