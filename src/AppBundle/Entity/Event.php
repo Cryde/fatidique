@@ -172,7 +172,7 @@ class Event
      *
      * @return boolean
      */
-    public function getPrivate()
+    public function isPrivate()
     {
         return $this->private;
     }

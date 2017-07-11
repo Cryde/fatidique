@@ -31,7 +31,7 @@ class SlugRandomize
 
     public function randomizeSlug()
     {
-        if ($this->event->getPrivate()) {
+        if ($this->event->isPrivate()) {
             $this->event->setSlug($this->shortId->encode(random_int(3000, 99999999), 9));
         }
     }
