@@ -6,7 +6,12 @@ use Doctrine\ORM\EntityRepository;
 
 class EventRepository extends EntityRepository
 {
-    public function findLastPublicEvents(int $limit = 5)
+    /**
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findLastPublicEvents(int $limit = 5): array
     {
         return $this->createQueryBuilder('event')
                     ->orderBy('event.created', 'DESC')
@@ -17,7 +22,12 @@ class EventRepository extends EntityRepository
                     ->getResult();
     }
 
-    public function findAlmostEndedPublicEvents(int $limit = 5)
+    /**
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findAlmostEndedPublicEvents(int $limit = 5): array
     {
         return $this->createQueryBuilder('event')
                     ->orderBy('event.date', 'ASC')
