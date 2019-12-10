@@ -37,9 +37,9 @@
         "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "deployer/recipes": "dev-master"
+        "deployer/recipes": "dev-master",
+        "symfony/maker-bundle": "^1.14",
+        "symfony/phpunit-bridge": "^3.0"
     },
     "scripts": {
         "symfony-scripts": [
