@@ -32,18 +32,20 @@
                     <span class="days"></span>
                     <div class="smalltext">jours</div>
                 </div>
-                <div>
-                    <span class="hours"></span>
-                    <div class="smalltext">heures</div>
-                </div>
-                <div>
-                    <span class="minutes"></span>
-                    <div class="smalltext">minutes</div>
-                </div>
-                <div>
-                    <span class="seconds"></span>
-                    <div class="smalltext">secondes</div>
-                </div>
+                {% if not event.isDateOnly %}
+                    <div>
+                        <span class="hours"></span>
+                        <div class="smalltext">heures</div>
+                    </div>
+                    <div>
+                        <span class="minutes"></span>
+                        <div class="smalltext">minutes</div>
+                    </div>
+                    <div>
+                        <span class="seconds"></span>
+                        <div class="smalltext">secondes</div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

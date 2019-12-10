@@ -1,6 +1,7 @@
 form:
   labels:
     date: Date
+    is_date_only: N'afficher que la date, sans l'heure
     label: Label
     description: Description
     private: Privé ? *
