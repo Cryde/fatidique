@@ -39,6 +39,7 @@ class EventType extends AbstractType
                         ],
                 ]
             )
+            ->add('isDateOnly', CheckboxType::class, ['required' => false, 'label' => 'form.labels.is_date_only'])
             ->add('label', TextType::class, ['label' => 'form.labels.label'])
             ->add('description', TextareaType::class, ['required' => false, 'label' => 'form.labels.description'])
             ->add('private', CheckboxType::class, ['required' => false, 'label' => 'form.labels.private']);

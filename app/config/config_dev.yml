@@ -39,3 +39,6 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+maker:
+    root_namespace: 'AppBundle'

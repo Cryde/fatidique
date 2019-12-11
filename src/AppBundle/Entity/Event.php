@@ -48,6 +48,11 @@ class Event
     private $created;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isDateOnly;
+
+    /**
      * Get id
      *
      * @return integer
@@ -199,5 +204,29 @@ class Event
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Set isDateOnly
+     *
+     * @param bool $isDateOnly
+     *
+     * @return Event
+     */
+    public function setIsDateOnly($isDateOnly)
+    {
+        $this->isDateOnly = $isDateOnly;
+
+        return $this;
+    }
+
+    /**
+     * Get isDateOnly
+     *
+     * @return bool
+     */
+    public function isDateOnly()
+    {
+        return $this->isDateOnly;
     }
 }
