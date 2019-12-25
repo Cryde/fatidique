@@ -2,41 +2,56 @@
 
 namespace Deployer;
 
-require 'recipe/symfony3.php';
-require 'vendor/deployer/recipes/recipe/yarn.php';
+require 'recipe/symfony4.php';
+require 'vendor/deployer/recipes/recipe/npm.php';
 
-// Configuration
-
+// Project repository
 set('repository', 'git@github.com:Cryde/fatidique.git');
 
-set('git_tty', true); // [Optional] Allocate tty for git on first deployment
+// [Optional] Allocate tty for git clone. Default value is false.
+set('git_tty', true);
 set('keep_releases', 2);
-add('shared_files', []);
+set('ssh_multiplexing', true);
 add('shared_dirs', []);
-add('writable_dirs', []);
+
+add('shared_files', [
+    '.env.local',
+]);
 
 // Hosts
 inventory('hosts.yml');
 
 // Tasks
-desc('Build Brunch assets');
-task('assets:build', function () {
-    run('cd {{release_path}} && {{bin/yarn}} run build:prod');
+task('npm:ci', function () {
+    run("cd {{release_path}} && {{bin/npm}} ci");
 });
-after('yarn:install', 'assets:build');
-
-desc('Restart PHP-FPM service');
-task('php-fpm:restart', function () {
-    run('sudo service php7.1-fpm reload');
-});
-after('deploy:symlink', 'php-fpm:restart');
+desc('Build assets');
+task(
+    'assets:build',
+    function () {
+        run('cd {{release_path}} && {{bin/npm}} run build');
+    }
+);
+after('npm:ci', 'assets:build');
 
 desc('Remove node_modules folder');
-task('assets:clean', function() {
-    run('cd {{release_path}} && rm -rf node_modules');
-});
+task(
+    'assets:clean',
+    function () {
+        run('cd {{release_path}} && rm -rf node_modules');
+    }
+);
 after('deploy:symlink', 'assets:clean');
+
+desc('Restart PHP-FPM service');
+task(
+    'php-fpm:restart',
+    function () {
+        run('sudo service php7.4-fpm reload');
+    }
+);
+after('deploy:symlink', 'php-fpm:restart');
 
 // Migrate database before symlink new release.
 before('deploy:symlink', 'database:migrate');
-after('deploy:update_code', 'yarn:install');
+after('deploy:update_code', 'npm:ci');
