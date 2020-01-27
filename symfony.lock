@@ -111,6 +111,9 @@
     "kotchuprik/php-short-id": {
         "version": "1.1"
     },
+    "laminas/laminas-zendframework-bridge": {
+        "version": "1.0.1"
+    },
     "monolog/monolog": {
         "version": "2.0.1"
     },
@@ -508,6 +511,9 @@
     },
     "vimeo/psalm": {
         "version": "3.7.2"
+    },
+    "webimpress/safe-writer": {
+        "version": "2.0.0"
     },
     "webmozart/assert": {
         "version": "1.6.0"
