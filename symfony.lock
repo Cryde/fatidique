@@ -5,6 +5,9 @@
     "amphp/byte-stream": {
         "version": "v1.7.1"
     },
+    "composer/semver": {
+        "version": "1.5.1"
+    },
     "composer/xdebug-handler": {
         "version": "1.4.0"
     },
