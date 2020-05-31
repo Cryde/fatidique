@@ -90,26 +90,14 @@
     "doctrine/reflection": {
         "version": "v1.0.0"
     },
-    "easycorp/easy-log-handler": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "70062abc2cd58794d2a90274502f81b55cd9951b"
-        },
-        "files": [
-            "config/packages/dev/easy_log_handler.yaml"
-        ]
+    "doctrine/sql-formatter": {
+        "version": "1.1.0"
     },
     "felixfbecker/advanced-json-rpc": {
         "version": "v3.0.4"
     },
     "felixfbecker/language-server-protocol": {
         "version": "v1.4.0"
-    },
-    "jdorn/sql-formatter": {
-        "version": "v1.2.17"
     },
     "kotchuprik/php-short-id": {
         "version": "1.1"
@@ -226,6 +214,9 @@
     "symfony/dependency-injection": {
         "version": "v5.0.1"
     },
+    "symfony/deprecation-contracts": {
+        "version": "v2.1.2"
+    },
     "symfony/doctrine-bridge": {
         "version": "v5.0.1"
     },
@@ -309,9 +300,6 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
-    "symfony/mime": {
-        "version": "v5.0.1"
-    },
     "symfony/monolog-bridge": {
         "version": "v5.0.1"
     },
@@ -357,9 +345,6 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.13.1"
     },
-    "symfony/polyfill-intl-idn": {
-        "version": "v1.13.1"
-    },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.13.1"
     },
@@ -369,11 +354,17 @@
     "symfony/polyfill-php73": {
         "version": "v1.13.1"
     },
+    "symfony/polyfill-php80": {
+        "version": "v1.17.0"
+    },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
     },
     "symfony/property-access": {
         "version": "v5.0.1"
+    },
+    "symfony/property-info": {
+        "version": "v5.1.0"
     },
     "symfony/routing": {
         "version": "4.2",
