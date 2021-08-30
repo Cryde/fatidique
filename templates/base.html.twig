@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" media="screen" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
+    <link rel="stylesheet" media="screen" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"/>
     {{ encore_entry_link_tags('app') }}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
@@ -19,13 +20,24 @@
 
     <div class="header clearfix">
         {% set currentRoute = app.request.attributes.get('_route') %}
-        <nav>
-            <ul class="nav nav-pills float-right">
-                <li class="nav-item"><a class="nav-link {{ currentRoute == 'homepage' ? 'active' : '' }}"  href="{{ path('homepage') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link {{ currentRoute == 'event_create' ? 'active' : '' }}"  href="{{ path('event_create') }}"><i class="fa fa-plus"></i> Créer</a></li>
-            </ul>
-        </nav>
-        <h1 class="text-muted"><i class="far fa-clock"></i> <span class="hidden-xs">Fatidique</span></h1>
+
+        <div class="row">
+            <div class="col">
+                <h1 class="text-muted"><i class="far fa-clock"></i> <span class="hidden-xs">Fatidique</span></h1>
+            </div>
+            <div class="col">
+                <nav>
+                    <ul class="nav nav-pills justify-content-end">
+                        <li class="nav-item"><a class="nav-link {{ currentRoute == 'homepage' ? 'active' : '' }}"
+                                                href="{{ path('homepage') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link {{ currentRoute == 'event_create' ? 'active' : '' }}"
+                                                href="{{ path('event_create') }}"><i class="fa fa-plus"></i> Créer</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+        </div>
     </div>
 
     {% block body %}{% endblock %}
@@ -36,10 +48,17 @@
 </div>
 {{ encore_entry_script_tags('app') }}
 <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
   ga('create', 'UA-101631975-1', 'auto');
   ga('send', 'pageview');

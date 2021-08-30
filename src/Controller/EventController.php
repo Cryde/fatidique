@@ -14,13 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
-    /**
-     * @Route("/", name="homepage")
-     *
-     * @param EventRepository $eventRepository
-     *
-     * @return Response
-     */
+    #[Route('/', name: "homepage")]
     public function indexAction(EventRepository $eventRepository): Response
     {
         return $this->render('event/index.html.twig', [
@@ -30,15 +24,9 @@ class EventController extends AbstractController
     }
 
     /**
-     * @Route("/create", name="event_create")
-     *
-     * @param SlugRandomize $slugRandomize
-     * @param Request       $request
-     * @param EventSlug     $eventSlug
-     *
-     * @return Response
      * @throws \Exception
      */
+    #[Route('/create', name: 'event_create')]
     public function create(SlugRandomize $slugRandomize, Request $request, EventSlug $eventSlug): Response
     {
         $event = new Event();
@@ -60,13 +48,7 @@ class EventController extends AbstractController
         return $this->render('event/create.html.twig', ['form' => $form->createView()]);
     }
 
-    /**
-     * @Route("/{slug}", name="event_view")
-     *
-     * @param Event $event
-     *
-     * @return Response
-     */
+    #[Route('/{slug}', name: 'event_view')]
     public function show(Event $event): Response
     {
         return $this->render('event/view.html.twig', ['event' => $event]);

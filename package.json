@@ -1,9 +1,9 @@
 {
     "devDependencies": {
-        "@symfony/webpack-encore": "^0.28.3",
-        "core-js": "^3.6.4",
-        "regenerator-runtime": "^0.13.5",
-        "webpack-notifier": "^1.6.0"
+        "@symfony/webpack-encore": "^1.5.0",
+        "core-js": "^3.16.4",
+        "regenerator-runtime": "^0.13.9",
+        "webpack-notifier": "^1.13.0"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -14,10 +14,10 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "bootstrap": "^4.4.1",
-        "jquery": "^3.4.1",
-        "moment": "^2.24.0",
+        "bootstrap": "^5.1.0",
+        "jquery": "^3.6.0",
+        "moment": "^2.29.1",
         "moment-precise-range": "^0.2.0",
-        "tempusdominus-bootstrap-4": "^5.1.2"
+        "tempusdominus-bootstrap-4": "^5.39.0"
     }
 }

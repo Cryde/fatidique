@@ -13,11 +13,6 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    /**
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findLastPublicEvents(int $limit = 5): array
     {
         return $this->createQueryBuilder('event')
@@ -29,11 +24,6 @@ class EventRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @param int $limit
-     *
-     * @return array
-     */
     public function findAlmostEndedPublicEvents(int $limit = 5): array
     {
         return $this->createQueryBuilder('event')
