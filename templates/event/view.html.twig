@@ -20,43 +20,45 @@
         <div class="md:col-start-2 md:col-span-2">
             <div id="clock" data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}"></div>
 
-            <div class="grid grid-flow-col gap-5 text-center auto-cols-max invisible justify-center" id="countdown">
-
-                <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                    <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="years"></span></span>
-                    années
+            <div id="countdown">
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="years"></div>
+                    <div class="text-2xl self-end pb-2">années</div>
                 </div>
-                <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                    <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="months"></span></span>
-                    mois
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="months"></div>
+                    <div class="text-2xl self-end pb-2">mois</div>
                 </div>
-
-                <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
-                    <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                        <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="days"></span></span>
-                        jours
-                    </div>
-                    {% if not event.isDateOnly %}
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
-                                                                             id="hours"></span></span>
-                            heures
-                        </div>
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
-                                                                             id="minutes"></span></span>
-                            min
-                        </div>
-                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
-                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
-                                                                             id="secondes"></span></span>
-                            sec
-                        </div>
-                    {% endif %}
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="days"></div>
+                    <div class="text-2xl self-end pb-2">jours</div>
                 </div>
-
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="hours"></div>
+                    <div class="text-2xl self-end pb-2">heures</div>
+                </div>
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="minutes"></div>
+                    <div class="text-2xl self-end pb-2">minutes</div>
+                </div>
+                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                    <div class="md:col-start-2 text-right border-b pb-2" id="secondes"></div>
+                    <div class="text-2xl self-end pb-2">secondes</div>
+                </div>
             </div>
+
+            <span class="countdown font-mono text-2xl invisible">
+              <span style="--value:1;"></span>années<br/>
+              <span style="--value:1;"></span>mois<br/>
+              <span style="--value:1;"></span>jours<br/>
+                {% if not event.isDateOnly %}
+                    <span style="--value:1;"></span>heures<br/>
+                    <span style="--value:1;"></span>minutes<br/>
+                    <span style="--value:1;"></span>secondes
+                {% endif %}
+            </span>
         </div>
+    </div>
     </div>
 
 

@@ -13,17 +13,17 @@ if (clock && countdown) {
 
   const changeValues = () => {
     const values = calculateInterval();
-    yearsContainer.style.setProperty('--value', (values.years || 0).toString());
-    monthsContainer.style.setProperty('--value', (values.months || 0).toString());
-    daysContainer.style.setProperty('--value', (values.days || 0).toString());
+    yearsContainer.textContent = (values.years || 0).toString();
+    monthsContainer.textContent = (values.months || 0).toString();
+    daysContainer.textContent = (values.days || 0).toString();
     if (hoursContainer) {
-      hoursContainer.style.setProperty('--value', (values.hours || 0).toString());
+      hoursContainer.textContent = (values.hours || 0).toString();
     }
     if (minutesContainer) {
-      minutesContainer.style.setProperty('--value', (values.minutes || 0).toString());
+      minutesContainer.textContent = (values.minutes || 0).toString();
     }
     if (secondsContainer) {
-      secondsContainer.style.setProperty('--value', (values.seconds || 0).toString());
+      secondsContainer.textContent = (values.seconds || 0).toString();
     }
   };
   changeValues();
