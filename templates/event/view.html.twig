@@ -17,48 +17,38 @@
     </div>
 
     <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 mb-20">
-        <div class="md:col-start-2 md:col-span-2">
+        <div class="md:col-start-2 md:col-span-2 p-4 md:p-0">
             <div id="clock" data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}"></div>
 
             <div id="countdown">
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="years"></div>
                     <div class="text-2xl self-end pb-2">années</div>
                 </div>
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="months"></div>
                     <div class="text-2xl self-end pb-2">mois</div>
                 </div>
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="days"></div>
                     <div class="text-2xl self-end pb-2">jours</div>
                 </div>
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                {% if not event.isDateOnly %}
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="hours"></div>
                     <div class="text-2xl self-end pb-2">heures</div>
                 </div>
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="minutes"></div>
                     <div class="text-2xl self-end pb-2">minutes</div>
                 </div>
-                <div class="grid grid-cols-4 gap-8 text-5xl mt-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
                     <div class="md:col-start-2 text-right border-b pb-2" id="secondes"></div>
                     <div class="text-2xl self-end pb-2">secondes</div>
                 </div>
-            </div>
-
-            <span class="countdown font-mono text-2xl invisible">
-              <span style="--value:1;"></span>années<br/>
-              <span style="--value:1;"></span>mois<br/>
-              <span style="--value:1;"></span>jours<br/>
-                {% if not event.isDateOnly %}
-                    <span style="--value:1;"></span>heures<br/>
-                    <span style="--value:1;"></span>minutes<br/>
-                    <span style="--value:1;"></span>secondes
                 {% endif %}
-            </span>
+            </div>
         </div>
-    </div>
     </div>
 
 
