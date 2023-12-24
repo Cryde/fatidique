@@ -9,52 +9,62 @@
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-lg-12">
-            <h2>{{ event.label }}</h2>
-
-            <hr/>
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
+        <div class="md:col-start-2 md:col-span-2">
+            <h1 class="text-2xl">{{ event.label }}</h1>
+            <div class="divider mt-1"></div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <div id="clock" data-timestamp="{{ event.date.timestamp }}">
 
-                <div>
-                    <span class="years"></span>
-                    <div class="smalltext">années</div>
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 mb-20">
+        <div class="md:col-start-2 md:col-span-2">
+            <div id="clock" data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}"></div>
+
+            <div class="grid grid-flow-col gap-5 text-center auto-cols-max invisible justify-center" id="countdown">
+
+                <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                    <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="years"></span></span>
+                    années
                 </div>
-                <div>
-                    <span class="months"></span>
-                    <div class="smalltext">mois</div>
+                <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                    <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="months"></span></span>
+                    mois
                 </div>
-                <div>
-                    <span class="days"></span>
-                    <div class="smalltext">jours</div>
+
+                <div class="grid grid-flow-col gap-5 text-center auto-cols-max">
+                    <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                        <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;" id="days"></span></span>
+                        jours
+                    </div>
+                    {% if not event.isDateOnly %}
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
+                                                                             id="hours"></span></span>
+                            heures
+                        </div>
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
+                                                                             id="minutes"></span></span>
+                            min
+                        </div>
+                        <div class="flex flex-col p-2 bg-neutral rounded-box text-neutral-content">
+                            <span class="countdown font-mono text-2xl md:text-4xl lg:text-5xl"><span style="--value:1;"
+                                                                             id="secondes"></span></span>
+                            sec
+                        </div>
+                    {% endif %}
                 </div>
-                {% if not event.isDateOnly %}
-                    <div>
-                        <span class="hours"></span>
-                        <div class="smalltext">heures</div>
-                    </div>
-                    <div>
-                        <span class="minutes"></span>
-                        <div class="smalltext">minutes</div>
-                    </div>
-                    <div>
-                        <span class="seconds"></span>
-                        <div class="smalltext">secondes</div>
-                    </div>
-                {% endif %}
+
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            {% if event.description %}
 
-                <h4>Détails</h4>
-                <hr/>
+
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
+        <div class="md:col-start-2 md:col-span-2">
+            {% if event.description %}
+                <h4 class="text-md">Détails</h4>
+                <div class="divider mt-1"></div>
                 <p>
                     {{ event.description | nl2br }}
                     <br/><br/>

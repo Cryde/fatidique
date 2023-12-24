@@ -7,13 +7,10 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 class EventSlug
 {
-    private EventRepository $eventRepository;
-    private SluggerInterface $slugger;
-
-    public function __construct(EventRepository $eventRepository, SluggerInterface $slugger)
-    {
-        $this->eventRepository = $eventRepository;
-        $this->slugger = $slugger;
+    public function __construct(
+        private readonly EventRepository  $eventRepository,
+        private readonly SluggerInterface $slugger
+    ) {
     }
 
     public function create(string $slugCandidate): string

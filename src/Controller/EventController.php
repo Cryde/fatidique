@@ -7,6 +7,7 @@ use App\Form\Type\EventType;
 use App\Repository\EventRepository;
 use App\Service\EventSlug;
 use App\Service\SlugRandomize;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EventController extends AbstractController
 {
+    public function __construct(private readonly EntityManagerInterface $entityManager)
+    {
+    }
+
     #[Route('/', name: "homepage")]
     public function indexAction(EventRepository $eventRepository): Response
     {
@@ -36,7 +41,7 @@ class EventController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->entityManager;
             $event->setSlug($eventSlug->create($event->getLabel()));
             $slugRandomize->randomizeSlug($event);
             $em->persist($event);

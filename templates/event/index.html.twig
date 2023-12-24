@@ -1,33 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="p-5 mb-4 bg-light rounded-3 text-center">
-        <h2>Fatidique</h2>
-        <p class="lead">
-            Parce que chaque moment fatidique a besoin de <br/><strong>son compteur</strong>...
-        </p>
-        <p><a class="btn btn-lg btn-outline-primary" href="{{ path('event_create') }}" role="button"><i class="fa fa-plus"></i>
-                Créer un compteur <span class="visible-xs-block visible-sm-inline visible-md-inline visible-lg-inline">fatidique</span></a>
-        </p>
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20">
+        <div class="hero min-h-300 md:col-start-2 md:col-span-2" style="background-image: url({{ asset('assets/images/bg-quote.jpg') }});">
+            <div class="hero-overlay bg-opacity-60"></div>
+            <div class="hero-content text-center text-neutral-content">
+                <div class="max-w-md">
+                    <h1 class="mb-5 mt-5 text-5xl rounded-md font-bold bg-black/[.5] p-5">Fatidique</h1>
+                    <p class="mb-5 bg-black/[.5] p-5 rounded-md">Parce que chaque moment fatidique a besoin de <br/><strong>son compteur</strong>...</p>
+                    <a class="btn btn-primary mb-5 mt-3" href="{{ path('event_create') }}">Créer un compteur fatidique</a>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="row marketing">
-        <div class="col-lg-6">
-            <h3>Nouveautés</h3>
+
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
+        <div class="md:col-start-2">
+            <h3 class="text-xl mb-4">Nouveautés</h3>
             <p>
                 {# @var event \AppBundle\Entity\Event #}
                 {% for event in lastEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}">{{ event.label }}</a> <br/>
+                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="underline">
+                        {{ event.label }}
+                    </a> <br/>
                 {% endfor %}
             </p>
         </div>
 
-        <div class="col-lg-6 text-right">
-            <h3>Moments fatidique</h3>
+        <div class="text-left mt-10 md:text-right md:mt-0">
+            <h3 class="text-xl mb-4">Moments fatidique</h3>
             <p>
                 {# @var event \AppBundle\Entity\Event #}
                 {% for event in almostEndedEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}">{{ event.label }}</a> <br/>
+                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="underline">
+                        {{ event.label }}
+                    </a> <br/>
                 {% endfor %}
             </p>
         </div>

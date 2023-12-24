@@ -1,0 +1,14 @@
+{% set currentRoute = app.request.attributes.get('_route') %}
+<div class="navbar bg-base-100">
+    <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="{{ path('homepage') }}">
+            <i class="far fa-clock"></i>  Fatidique
+        </a>
+    </div>
+    <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+            <li><a href="{{ path('homepage') }}" class="mr-2 {{ currentRoute == 'homepage' ? 'active' : '' }}">Home</a></li>
+            <li><a href="{{ path('event_create') }}" class="{{ currentRoute == 'event_create' ? 'active' : '' }}"><i class="fa fa-plus"></i> Créer</a></li>
+        </ul>
+    </div>
+</div>

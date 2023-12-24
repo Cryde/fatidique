@@ -3,36 +3,80 @@
 {% block title %}Créer un compteur fatidique{% endblock %}
 {% block description %}Créer un compteur fatidique en remplissant le formulaire ci dessous{% endblock %}
 
-{% form_theme form 'bootstrap_5_horizontal_layout.html.twig' %}
-
 {% block body %}
+    <figure class="max-w-screen-md mx-auto text-center">
 
-    <div class="row marketing">
-        <div class="col-lg-12">
-            <figure>
-                <blockquote class="blockquote text-end">
-                    <p class="mb-0">La distance Grappille le temps.</p>
-                </blockquote>
-                <figcaption class="blockquote-footer text-end">
-                    Eugène Guillevic
-                </figcaption>
-            </figure>
-        </div>
-    </div>
+        <i class="fa-solid fa-quote-right fa-2xl mx-auto mb-5 text-gray-400 dark:text-gray-600"></i>
+        <blockquote>
+            <p class="text-2xl italic font-medium text-gray-900 dark:text-white">"La distance Grappille le temps."</p>
+        </blockquote>
+        <figcaption class="flex items-center justify-center mt-6 space-x-3 rtl:space-x-reverse">
+            <img class="w-6 h-6 rounded-full"
+                 src="https://images.mubicdn.net/images/cast_member/584751/cache-633793-1610839605/image-w856.jpg?size=240x"
+                 alt="profile picture">
+            <div class="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-500 dark:divide-gray-700">
+                <cite class="pe-3 font-medium text-gray-900 dark:text-white">Eugène Guillevic</cite>
+                <cite class="ps-3 text-sm text-gray-500 dark:text-gray-400">
+                    Poète français
+                </cite>
+            </div>
+        </figcaption>
+    </figure>
 
-    <div class="row marketing">
-        <div class="col-lg-12">
+    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 mb-20 px-4 md:px-0">
+        <div class="md:col-start-2 md:col-span-2">
+
             {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit" class="btn btn-primary float-end"><i class="fas fa-paper-plane"></i> Enregistrer</button>
+
+            <label class="form-control w-full">
+                <div class="label">
+                    <span class="label-text">Date</span>
+                </div>
+                {{ form_widget(form.date, {attr: {class: 'input input-bordered w-full'}}) }}
+            </label>
+
+            <div class="form-control mt-5">
+                <label class="cursor-pointer">
+                    <span class="label-text mr-2">N'afficher que la date, sans l'heure</span>
+                    {{ form_widget(form.isDateOnly, {attr: {class :'checkbox'}}) }}
+                </label>
+            </div>
+
+            <label class="form-control w-full mt-5">
+                <div class="label">
+                    <span class="label-text">Le titre de cet événement</span>
+                </div>
+                {{ form_widget(form.label, {attr: {class: 'input input-bordered w-full'}}) }}
+            </label>
+
+
+            <label class="form-control mt-5">
+                <div class="label">
+                    <span class="label-text">Une petite description</span>
+                </div>
+                {{ form_widget(form.description, {attr: {class: 'textarea textarea-bordered h-24'}}) }}
+            </label>
+
+            <div class="form-control mt-5">
+                <label class="cursor-pointer">
+                    <span class="label-text mr-2">Privé ? *</span>
+                    {{ form_widget(form.private, {attr: {class :'checkbox'}}) }}
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary float-end"><i class="fas fa-paper-plane"></i> Enregistrer
+            </button>
             {{ form_end(form) }}
-        </div>
-    </div>
-    <div class="row marketing">
-        <div class="col-lg-12 alert-container">
-            <p class="alert alert-info">
-                <em>* Si vous marquez le moment fatidique en 'privé', celui-ci n'apparaitra pas sur la page d'acceuil. Seuls les personnes avec le lien pourront y avoir accès.</em>
-            </p>
+
+
+            <div role="alert" class="alert mt-20">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                     class="stroke-info shrink-0 w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>* Si vous marquez le moment fatidique en 'privé', celui-ci n'apparaitra pas sur la page d'acceuil. Seuls les personnes avec le lien pourront y avoir accès.</span>
+            </div>
         </div>
     </div>
 {% endblock %}
