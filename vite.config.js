@@ -6,6 +6,7 @@ export default defineConfig({
     symfonyPlugin(),
   ],
   build: {
+    assetsInlineLimit: 0,
     rollupOptions: {
       input: {
         app: "./assets/app.js"
