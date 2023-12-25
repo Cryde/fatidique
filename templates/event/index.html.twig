@@ -17,25 +17,25 @@
 
     <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
         <div class="md:col-start-2">
-            <h3 class="text-xl mb-4">Nouveautés</h3>
+            <h3 class="text-2xl mb-4">Nouveautés</h3>
             <p>
                 {# @var event \AppBundle\Entity\Event #}
                 {% for event in lastEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="underline">
+                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="link block pt-1 pb-1">
                         {{ event.label }}
-                    </a> <br/>
+                    </a>
                 {% endfor %}
             </p>
         </div>
 
         <div class="text-left mt-10 md:text-right md:mt-0">
-            <h3 class="text-xl mb-4">Moments fatidique</h3>
+            <h3 class="text-2xl mb-4">Moments fatidique</h3>
             <p>
                 {# @var event \AppBundle\Entity\Event #}
                 {% for event in almostEndedEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="underline">
+                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="link block pt-1 pb-1">
                         {{ event.label }}
-                    </a> <br/>
+                    </a>
                 {% endfor %}
             </p>
         </div>
