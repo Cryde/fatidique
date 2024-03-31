@@ -3,15 +3,12 @@
 namespace App\Service;
 
 use App\Entity\Event;
-use kotchuprik\short_id\ShortId;
+use Hashids\HashidsInterface;
 
-class SlugRandomize
+readonly class SlugRandomize
 {
-    private ShortId $shortId;
-
-    public function __construct(ShortId $shortId)
+    public function __construct(private HashidsInterface $hashids)
     {
-        $this->shortId = $shortId;
     }
 
     /**
@@ -20,7 +17,7 @@ class SlugRandomize
     public function randomizeSlug(Event $event): void
     {
         if ($event->isPrivate()) {
-            $event->setSlug($this->shortId->encode(random_int(3000, 99999999), 9));
+            $event->setSlug($this->hashids->encode(random_int(3000, 999999999999)));
         }
     }
 }

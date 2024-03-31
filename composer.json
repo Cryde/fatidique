@@ -10,7 +10,7 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "doctrine/orm": "^2.17",
-        "kotchuprik/php-short-id": "^1.1",
+        "hashids/hashids": "^5.0",
         "pentatrion/vite-bundle": "^6.3",
         "phpdocumentor/reflection-docblock": "^5.3",
         "phpstan/phpdoc-parser": "^1.24",
