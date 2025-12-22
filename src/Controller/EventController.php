@@ -40,7 +40,6 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $em = $this->entityManager;
             $event->setSlug($eventSlug->create($event->getLabel()));
             $slugRandomize->randomizeSlug($event);

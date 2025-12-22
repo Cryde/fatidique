@@ -30,41 +30,35 @@
 
             {{ form_start(form) }}
 
-            <label class="form-control w-full">
-                <div class="label">
-                    <span class="label-text">Date</span>
-                </div>
+            <fieldset class="form-fieldset">
+                <legend class="fieldset-legend">Date</legend>
                 {{ form_widget(form.date, {attr: {class: 'input input-bordered w-full'}}) }}
-            </label>
+            </fieldset>
 
-            <div class="form-control mt-5">
-                <label class="cursor-pointer">
-                    <span class="label-text mr-2">N'afficher que la date, sans l'heure</span>
+            <fieldset class="fieldset">
+                <label class="cursor-pointer label">
+                    N'afficher que la date, sans l'heure
                     {{ form_widget(form.isDateOnly, {attr: {class :'checkbox'}}) }}
                 </label>
-            </div>
+            </fieldset>
 
-            <label class="form-control w-full mt-5">
-                <div class="label">
-                    <span class="label-text">Le titre de cet événement</span>
-                </div>
+            <label class="fieldset">
+                <legend class="fieldset-legend">Le titre de cet événement</legend>
                 {{ form_widget(form.label, {attr: {class: 'input input-bordered w-full'}}) }}
             </label>
 
 
-            <label class="form-control mt-5">
-                <div class="label">
-                    <span class="label-text">Une petite description</span>
-                </div>
-                {{ form_widget(form.description, {attr: {class: 'textarea textarea-bordered h-24'}}) }}
-            </label>
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Une petite description</legend>
+                {{ form_widget(form.description, {attr: {class: 'textarea textarea-bordered h-24 w-full'}}) }}
+            </fieldset>
 
-            <div class="form-control mt-5">
-                <label class="cursor-pointer">
-                    <span class="label-text mr-2">Privé ? *</span>
+            <fieldset class="fieldset form-control">
+                <label class="cursor-pointer label">
+                    Privé ? *
                     {{ form_widget(form.private, {attr: {class :'checkbox'}}) }}
                 </label>
-            </div>
+            </fieldset>
 
             <button type="submit" class="btn btn-primary float-end">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

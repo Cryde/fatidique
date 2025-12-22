@@ -17,7 +17,7 @@ class Event
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\GreaterThan('now')]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTime $date = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
@@ -33,15 +33,15 @@ class Event
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $created = null;
+    private ?\DateTime $created = null;
 
     #[ORM\Column]
     private ?bool $isDateOnly = null;
 
     public function __construct()
     {
-        $this->created = new \DateTimeImmutable();
-        $this->date = new \DateTimeImmutable();
+        $this->created = new \DateTime();
+        $this->date = new \DateTime();
         $this->label = '';
         $this->slug = '';
         $this->description = '';
@@ -54,12 +54,12 @@ class Event
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): static
+    public function setDate(\DateTime $date): static
     {
         $this->date = $date;
 
