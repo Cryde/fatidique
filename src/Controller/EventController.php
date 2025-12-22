@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class EventController extends AbstractController
 {
@@ -53,7 +53,7 @@ class EventController extends AbstractController
         return $this->render('event/create.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/{slug}', name: 'event_view')]
+    #[Route('/{slug:event}', name: 'event_view')]
     public function show(Event $event): Response
     {
         return $this->render('event/view.html.twig', ['event' => $event]);
