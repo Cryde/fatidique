@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="hero min-h-96 mt-10 mx-4 rounded-2xl" style="background-image: url({{ asset('assets/images/bg-quote.webp') }});">
-        <div class="hero-overlay bg-opacity-60 rounded-2xl"></div>
-        <div class="hero-content text-center text-neutral-content">
+    <div class="hero min-h-64 md:min-h-80 mt-6 md:mt-10 mx-2 md:mx-4 rounded-xl md:rounded-2xl" style="background-image: url({{ asset('assets/images/bg-quote.webp') }});">
+        <div class="hero-overlay bg-opacity-60 rounded-xl md:rounded-2xl"></div>
+        <div class="hero-content text-center text-neutral-content px-4 py-8">
             <div class="max-w-md">
-                <h1 class="mb-5 text-5xl font-bold">Fatidique</h1>
-                <p class="mb-5 text-lg opacity-90">Parce que chaque moment fatidique a besoin de <strong>son compteur</strong>...</p>
-                <a class="btn btn-primary btn-lg" href="{{ path('event_create') }}">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <h1 class="mb-3 md:mb-5 text-3xl md:text-5xl font-bold">Fatidique</h1>
+                <p class="mb-4 md:mb-5 text-base md:text-lg opacity-90">Parce que chaque moment fatidique a besoin de <strong>son compteur</strong>...</p>
+                <a class="btn btn-primary btn-md md:btn-lg" href="{{ path('event_create') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 md:w-5 md:h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                     Créer un compteur
