@@ -16,39 +16,53 @@
         </div>
     </div>
 
-    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 mb-20">
-        <div class="md:col-start-2 md:col-span-2 p-4 md:p-0">
-            <div id="clock" data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}"></div>
+    <div id="clock" data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}" data-date-only="{{ event.isDateOnly ? '1' : '0' }}"></div>
 
-            <div id="countdown">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="years"></div>
-                    <div class="text-2xl self-end pb-2">années</div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="months"></div>
-                    <div class="text-2xl self-end pb-2">mois</div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="days"></div>
-                    <div class="text-2xl self-end pb-2">jours</div>
-                </div>
-                {% if not event.isDateOnly %}
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="hours"></div>
-                    <div class="text-2xl self-end pb-2">heures</div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="minutes"></div>
-                    <div class="text-2xl self-end pb-2">minutes</div>
-                </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-5xl mt-6">
-                    <div class="md:col-start-2 text-right border-b pb-2" id="secondes"></div>
-                    <div class="text-2xl self-end pb-2">secondes</div>
-                </div>
-                {% endif %}
-            </div>
+    <div id="celebration" class="hidden text-center mt-16 mb-20 px-4">
+        <div class="text-6xl md:text-8xl mb-6">🎉</div>
+        <h2 class="text-3xl md:text-5xl font-bold mb-4">C'est le moment !</h2>
+        <p class="text-xl opacity-70">Le compte à rebours est terminé</p>
+    </div>
+
+    <div id="countdown" class="invisible flex flex-wrap justify-center gap-4 mt-16 mb-20 px-4">
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="years" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">années</span>
         </div>
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="months" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">mois</span>
+        </div>
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="days" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">jours</span>
+        </div>
+        {% if not event.isDateOnly %}
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="hours" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">heures</span>
+        </div>
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="minutes" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">minutes</span>
+        </div>
+        <div class="flex flex-col items-center bg-base-200 rounded-box p-4 min-w-24">
+            <span class="countdown font-mono text-5xl md:text-6xl">
+                <span id="secondes" style="--value:0;"></span>
+            </span>
+            <span class="text-sm mt-2 opacity-70">secondes</span>
+        </div>
+        {% endif %}
     </div>
 
 
