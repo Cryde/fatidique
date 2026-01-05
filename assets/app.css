@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
+/* Smooth theme transitions */
+body {
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+.navbar, .footer, .btn-outline, .btn-primary,
+.input, .textarea, .select, .checkbox, .alert,
+label, .label, .fieldset-legend, blockquote, figcaption, cite {
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 /* Mood Themes */
 .theme-default {
   --countdown-bg: var(--fallback-b2, oklch(var(--b2)));
@@ -14,9 +25,9 @@
 }
 
 .theme-romantic {
-  --countdown-bg: oklch(0.85 0.1 0);
-  --countdown-text: oklch(0.3 0.1 0);
-  background: linear-gradient(135deg, oklch(0.9 0.08 350) 0%, oklch(0.85 0.12 10) 100%);
+  --countdown-bg: oklch(0.45 0.15 350);
+  --countdown-text: white;
+  background: linear-gradient(135deg, oklch(0.4 0.18 350) 0%, oklch(0.5 0.2 10) 100%);
 }
 
 .theme-professional {
@@ -66,23 +77,184 @@
 /* Theme text colors */
 [class^="theme-"]:not(.theme-default) h1,
 [class^="theme-"]:not(.theme-default) h2,
+[class^="theme-"]:not(.theme-default) h3,
+[class^="theme-"]:not(.theme-default) h4,
 [class^="theme-"]:not(.theme-default) p,
 [class^="theme-"]:not(.theme-default) .divider {
   color: white;
 }
 
-.theme-romantic h1,
-.theme-romantic h2,
-.theme-romantic p,
-.theme-romantic .divider {
-  color: oklch(0.25 0.08 0);
+/* Navbar styling for themes */
+[class^="theme-"]:not(.theme-default) .navbar {
+  background: transparent;
 }
+
+[class^="theme-"]:not(.theme-default) .navbar a,
+[class^="theme-"]:not(.theme-default) .navbar .btn-ghost {
+  color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .navbar a:hover,
+[class^="theme-"]:not(.theme-default) .navbar .btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+[class^="theme-"]:not(.theme-default) .navbar .menu a.active {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Footer styling for themes */
+[class^="theme-"]:not(.theme-default) .footer {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Share buttons styling for themes */
+[class^="theme-"]:not(.theme-default) .btn-outline {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Form styling for themes */
+[class^="theme-"]:not(.theme-default) .fieldset-legend,
+[class^="theme-"]:not(.theme-default) label,
+[class^="theme-"]:not(.theme-default) .label {
+  color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .input,
+[class^="theme-"]:not(.theme-default) .textarea,
+[class^="theme-"]:not(.theme-default) .select {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .input::placeholder,
+[class^="theme-"]:not(.theme-default) .textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+[class^="theme-"]:not(.theme-default) .input:focus,
+[class^="theme-"]:not(.theme-default) .textarea:focus,
+[class^="theme-"]:not(.theme-default) .select:focus {
+  border-color: rgba(255, 255, 255, 0.6);
+  outline-color: rgba(255, 255, 255, 0.3);
+}
+
+[class^="theme-"]:not(.theme-default) .checkbox {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+[class^="theme-"]:not(.theme-default) .checkbox:checked {
+  background-color: white;
+  border-color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .btn-primary {
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  border: none;
+}
+
+[class^="theme-"]:not(.theme-default) .btn-primary:hover {
+  background: white;
+}
+
+[class^="theme-"]:not(.theme-default) .alert {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+[class^="theme-"]:not(.theme-default) .alert svg {
+  color: white;
+}
+
+/* Quote/hero section on create page */
+[class^="theme-"]:not(.theme-default) blockquote,
+[class^="theme-"]:not(.theme-default) figcaption,
+[class^="theme-"]:not(.theme-default) cite {
+  color: white !important;
+}
+
 
 .theme-tropical h1,
 .theme-tropical h2,
+.theme-tropical h3,
+.theme-tropical h4,
 .theme-tropical p,
 .theme-tropical .divider {
   color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .navbar a,
+.theme-tropical .navbar .btn-ghost,
+.theme-tropical .footer {
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .btn-outline {
+  border-color: oklch(0.2 0.05 150 / 0.4);
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .btn-outline:hover {
+  background: oklch(0.2 0.05 150 / 0.1);
+  border-color: oklch(0.2 0.05 150 / 0.6);
+}
+
+/* Tropical form overrides (dark text) */
+.theme-tropical .fieldset-legend,
+.theme-tropical label,
+.theme-tropical .label {
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .input,
+.theme-tropical .textarea,
+.theme-tropical .select {
+  background: rgba(0, 50, 30, 0.1);
+  border-color: oklch(0.2 0.05 150 / 0.3);
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .input::placeholder,
+.theme-tropical .textarea::placeholder {
+  color: oklch(0.2 0.05 150 / 0.5);
+}
+
+.theme-tropical .checkbox {
+  border-color: oklch(0.2 0.05 150 / 0.5);
+}
+
+.theme-tropical .btn-primary {
+  background: oklch(0.3 0.1 150);
+  color: white;
+}
+
+.theme-tropical .btn-primary:hover {
+  background: oklch(0.25 0.1 150);
+}
+
+.theme-tropical .alert {
+  background: oklch(0.2 0.05 150 / 0.1);
+  border-color: oklch(0.2 0.05 150 / 0.2);
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical .alert svg {
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-tropical blockquote,
+.theme-tropical figcaption,
+.theme-tropical cite {
+  color: oklch(0.2 0.05 150) !important;
 }
 
 /* Theme picker previews */
@@ -106,8 +278,8 @@
 }
 
 .theme-preview.theme-romantic {
-  background: linear-gradient(135deg, oklch(0.9 0.08 350) 0%, oklch(0.85 0.12 10) 100%);
-  color: oklch(0.3 0.1 0);
+  background: linear-gradient(135deg, oklch(0.4 0.18 350) 0%, oklch(0.5 0.2 10) 100%);
+  color: white;
 }
 
 .theme-preview.theme-professional {

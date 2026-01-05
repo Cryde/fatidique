@@ -1,43 +1,78 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20">
-        <div class="hero min-h-130 md:col-start-2 md:col-span-2" style="background-image: url({{ asset('assets/images/bg-quote.webp') }});">
-            <div class="hero-overlay bg-opacity-60"></div>
-            <div class="hero-content text-center text-neutral-content">
-                <div class="max-w-md">
-                    <h1 class="mb-5 mt-5 text-5xl rounded-md font-bold bg-black/[.5] p-5">Fatidique</h1>
-                    <p class="mb-5 bg-black/[.5] p-5 rounded-md">Parce que chaque moment fatidique a besoin de <br/><strong>son compteur</strong>...</p>
-                    <a class="btn btn-primary mb-5 mt-3" href="{{ path('event_create') }}">Créer un compteur fatidique</a>
-                </div>
+    <div class="hero min-h-96 mt-10 mx-4 rounded-2xl" style="background-image: url({{ asset('assets/images/bg-quote.webp') }});">
+        <div class="hero-overlay bg-opacity-60 rounded-2xl"></div>
+        <div class="hero-content text-center text-neutral-content">
+            <div class="max-w-md">
+                <h1 class="mb-5 text-5xl font-bold">Fatidique</h1>
+                <p class="mb-5 text-lg opacity-90">Parce que chaque moment fatidique a besoin de <strong>son compteur</strong>...</p>
+                <a class="btn btn-primary btn-lg" href="{{ path('event_create') }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Créer un compteur
+                </a>
             </div>
         </div>
     </div>
 
-
-    <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
-        <div class="md:col-start-2">
-            <h3 class="text-2xl mb-4">Nouveautés</h3>
-            <p>
-                {# @var event \AppBundle\Entity\Event #}
+    <div class="max-w-5xl mx-auto px-4 mt-16">
+        {% if lastEvents|length > 0 %}
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
+                </svg>
+                Nouveautés
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {% for event in lastEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="link block pt-1 pb-1">
-                        {{ event.label }}
-                    </a>
+                    {{ _self.event_card(event) }}
                 {% endfor %}
-            </p>
+            </div>
         </div>
+        {% endif %}
 
-        <div class="text-left mt-10 md:text-right md:mt-0">
-            <h3 class="text-2xl mb-4">Moments fatidique</h3>
-            <p>
-                {# @var event \AppBundle\Entity\Event #}
+        {% if almostEndedEvents|length > 0 %}
+        <div class="mb-16">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                Bientôt !
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {% for event in almostEndedEvents %}
-                    <a href="{{ path('event_view', {slug: event.slug}) }}" class="link block pt-1 pb-1">
-                        {{ event.label }}
-                    </a>
+                    {{ _self.event_card(event) }}
                 {% endfor %}
-            </p>
+            </div>
         </div>
+        {% endif %}
     </div>
 {% endblock %}
+
+{% macro event_card(event) %}
+    {% set theme = constant('App\\Entity\\Event::THEMES')[event.themeOrDefault] %}
+    {% set daysLeft = ((event.date.timestamp - date().timestamp) / 86400)|round(0, 'floor') %}
+    <a href="{{ path('event_view', {slug: event.slug}) }}"
+       class="card card-compact shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] overflow-hidden">
+        <div class="theme-preview theme-{{ event.themeOrDefault }} p-6 min-h-32 flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+                <span class="text-3xl">{{ theme.emoji }}</span>
+                <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0">
+                    {% if daysLeft == 0 %}
+                        Aujourd'hui !
+                    {% elseif daysLeft == 1 %}
+                        Demain !
+                    {% elseif daysLeft < 0 %}
+                        Terminé
+                    {% else %}
+                        {{ daysLeft }} jours
+                    {% endif %}
+                </span>
+            </div>
+            <h3 class="card-title text-lg mt-4 line-clamp-2">{{ event.label }}</h3>
+        </div>
+    </a>
+{% endmacro %}

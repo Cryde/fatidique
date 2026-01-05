@@ -25,3 +25,30 @@ if (copyLinkBtn) {
   });
 }
 
+// Real-time theme preview on create page
+const themeRadios = document.querySelectorAll('input[name*="[theme]"]');
+if (themeRadios.length > 0) {
+  const removeThemeClasses = () => {
+    document.body.classList.forEach(cls => {
+      if (cls.startsWith('theme-')) {
+        document.body.classList.remove(cls);
+      }
+    });
+  };
+
+  themeRadios.forEach(radio => {
+    radio.addEventListener('change', (e) => {
+      removeThemeClasses();
+      if (e.target.value) {
+        document.body.classList.add(`theme-${e.target.value}`);
+      }
+    });
+
+    // Set initial theme if one is already selected
+    if (radio.checked && radio.value) {
+      removeThemeClasses();
+      document.body.classList.add(`theme-${radio.value}`);
+    }
+  });
+}
+

@@ -16,19 +16,21 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon16x16.png') }}">
 </head>
-<body>
-<div class="container mx-auto">
+<body class="{% block body_class %}{% endblock %}">
+<div class="min-h-screen flex flex-col">
+    <div class="container mx-auto flex-1">
 
-    {% include 'header.html.twig' %}
+        {% include 'header.html.twig' %}
 
-    {% block body %}{% endblock %}
+        {% block body %}{% endblock %}
+    </div>
+
+    <footer class="footer footer-center p-4 mt-20">
+        <aside>
+            <p>&copy; {{ 'now' | date('Y') }} Fatidique, Inc.</p>
+        </aside>
+    </footer>
 </div>
-
-<footer class="footer footer-center p-4 text-base-content mt-40">
-    <aside>
-        <p>&copy; {{ 'now' | date('Y') }} Fatidique, Inc.</p>
-    </aside>
-</footer>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM1K8HN77Q"></script>
 <script>
