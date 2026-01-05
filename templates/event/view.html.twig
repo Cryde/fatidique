@@ -65,6 +65,21 @@
         {% endif %}
     </div>
 
+    <div id="fun-stats" class="invisible text-center mt-8 mb-16 px-4 max-w-2xl mx-auto">
+        <p class="text-lg opacity-80">
+            Soit <span id="total-hours" class="font-bold">0</span> heures,
+            ou <span id="total-seconds" class="font-bold">0</span> secondes !
+        </p>
+        <div class="flex flex-wrap justify-center gap-3 mt-4">
+            <span class="badge badge-lg gap-1">😴 <span id="sleeps" class="font-bold">0</span> dodos</span>
+            <span class="badge badge-lg gap-1">☕ <span id="coffees" class="font-bold">0</span> cafés</span>
+            <span class="badge badge-lg gap-1">📺 <span id="episodes" class="font-bold">0</span> épisodes</span>
+            <span class="badge badge-lg gap-1">🍕 <span id="pizzas" class="font-bold">0</span> pizzas</span>
+            <span class="badge badge-lg gap-1">🎵 <span id="songs" class="font-bold">0</span> chansons</span>
+            <span class="badge badge-lg gap-1">🚶 <span id="walks" class="font-bold">0</span> km à pied</span>
+        </div>
+    </div>
+
     <div class="grid md:grid-cols-4 sm:grid-cols-1 mt-20 px-4 md:px-0">
         <div class="md:col-start-2 md:col-span-2">
             {% if event.description %}
