@@ -1,4 +1,5 @@
 import './countdown.js';
+import './particles.js';
 
 import.meta.glob([
   './images/**',

@@ -54,13 +54,20 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
   background: linear-gradient(135deg, oklch(0.35 0.18 25) 0%, oklch(0.4 0.2 140) 50%, oklch(0.35 0.18 25) 100%);
 }
 
+.theme-rainy {
+  --countdown-bg: oklch(0.4 0.05 240);
+  --countdown-text: white;
+  background: linear-gradient(180deg, oklch(0.35 0.08 240) 0%, oklch(0.45 0.1 220) 100%);
+}
+
 /* Apply theme colors to countdown boxes */
 .theme-party .countdown-box,
 .theme-romantic .countdown-box,
 .theme-professional .countdown-box,
 .theme-spooky .countdown-box,
 .theme-tropical .countdown-box,
-.theme-christmas .countdown-box {
+.theme-christmas .countdown-box,
+.theme-rainy .countdown-box {
   background-color: var(--countdown-bg);
   color: var(--countdown-text);
 }
@@ -70,7 +77,8 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
 .theme-professional .countdown-box .opacity-70,
 .theme-spooky .countdown-box .opacity-70,
 .theme-tropical .countdown-box .opacity-70,
-.theme-christmas .countdown-box .opacity-70 {
+.theme-christmas .countdown-box .opacity-70,
+.theme-rainy .countdown-box .opacity-70 {
   opacity: 0.85;
 }
 
@@ -299,5 +307,10 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
 
 .theme-preview.theme-christmas {
   background: linear-gradient(135deg, oklch(0.35 0.18 25) 0%, oklch(0.4 0.2 140) 50%, oklch(0.35 0.18 25) 100%);
+  color: white;
+}
+
+.theme-preview.theme-rainy {
+  background: linear-gradient(180deg, oklch(0.35 0.08 240) 0%, oklch(0.45 0.1 220) 100%);
   color: white;
 }

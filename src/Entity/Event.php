@@ -42,13 +42,14 @@ class Event
     private ?string $theme = null;
 
     public const THEMES = [
-        'default' => ['label' => 'Classique', 'emoji' => '⏱️'],
-        'party' => ['label' => 'Fête', 'emoji' => '🎉'],
-        'romantic' => ['label' => 'Romantique', 'emoji' => '💕'],
-        'professional' => ['label' => 'Professionnel', 'emoji' => '💼'],
-        'spooky' => ['label' => 'Halloween', 'emoji' => '🎃'],
-        'tropical' => ['label' => 'Tropical', 'emoji' => '🌴'],
-        'christmas' => ['label' => 'Noël', 'emoji' => '🎄'],
+        'default' => ['label' => 'Classique', 'emoji' => '⏱️', 'particle' => '✦'],
+        'party' => ['label' => 'Fête', 'emoji' => '🎉', 'particle' => '✨'],
+        'romantic' => ['label' => 'Romantique', 'emoji' => '💕', 'particle' => '💗'],
+        'professional' => ['label' => 'Professionnel', 'emoji' => '💼', 'particle' => '•'],
+        'spooky' => ['label' => 'Halloween', 'emoji' => '🎃', 'particle' => '🦇'],
+        'tropical' => ['label' => 'Tropical', 'emoji' => '🌴', 'particle' => '🌺'],
+        'christmas' => ['label' => 'Noël', 'emoji' => '🎄', 'particle' => '❄️'],
+        'rainy' => ['label' => 'Jour de pluie', 'emoji' => '🌧️', 'particle' => '💧'],
     ];
 
     public function __construct()
