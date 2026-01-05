@@ -38,6 +38,19 @@ class Event
     #[ORM\Column]
     private ?bool $isDateOnly = null;
 
+    #[ORM\Column(length: 30, nullable: true)]
+    private ?string $theme = null;
+
+    public const THEMES = [
+        'default' => ['label' => 'Classique', 'emoji' => '⏱️'],
+        'party' => ['label' => 'Fête', 'emoji' => '🎉'],
+        'romantic' => ['label' => 'Romantique', 'emoji' => '💕'],
+        'professional' => ['label' => 'Professionnel', 'emoji' => '💼'],
+        'spooky' => ['label' => 'Halloween', 'emoji' => '🎃'],
+        'tropical' => ['label' => 'Tropical', 'emoji' => '🌴'],
+        'christmas' => ['label' => 'Noël', 'emoji' => '🎄'],
+    ];
+
     public function __construct()
     {
         $this->created = new \DateTime();
@@ -136,5 +149,22 @@ class Event
         $this->isDateOnly = $isDateOnly;
 
         return $this;
+    }
+
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(?string $theme): static
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getThemeOrDefault(): string
+    {
+        return $this->theme ?? 'default';
     }
 }

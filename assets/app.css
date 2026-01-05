@@ -1,2 +1,131 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+/* Mood Themes */
+.theme-default {
+  --countdown-bg: var(--fallback-b2, oklch(var(--b2)));
+  --countdown-text: var(--fallback-bc, oklch(var(--bc)));
+}
+
+.theme-party {
+  --countdown-bg: oklch(0.7 0.15 330);
+  --countdown-text: white;
+  background: linear-gradient(135deg, oklch(0.6 0.2 280) 0%, oklch(0.7 0.2 330) 50%, oklch(0.75 0.15 30) 100%);
+}
+
+.theme-romantic {
+  --countdown-bg: oklch(0.85 0.1 0);
+  --countdown-text: oklch(0.3 0.1 0);
+  background: linear-gradient(135deg, oklch(0.9 0.08 350) 0%, oklch(0.85 0.12 10) 100%);
+}
+
+.theme-professional {
+  --countdown-bg: oklch(0.3 0.05 250);
+  --countdown-text: white;
+  background: linear-gradient(135deg, oklch(0.25 0.05 250) 0%, oklch(0.35 0.08 220) 100%);
+}
+
+.theme-spooky {
+  --countdown-bg: oklch(0.35 0.15 30);
+  --countdown-text: oklch(0.9 0.15 70);
+  background: linear-gradient(135deg, oklch(0.15 0.02 270) 0%, oklch(0.2 0.05 280) 100%);
+}
+
+.theme-tropical {
+  --countdown-bg: oklch(0.75 0.15 150);
+  --countdown-text: oklch(0.2 0.05 150);
+  background: linear-gradient(135deg, oklch(0.7 0.15 180) 0%, oklch(0.8 0.18 90) 100%);
+}
+
+.theme-christmas {
+  --countdown-bg: oklch(0.45 0.2 140);
+  --countdown-text: white;
+  background: linear-gradient(135deg, oklch(0.35 0.18 25) 0%, oklch(0.4 0.2 140) 50%, oklch(0.35 0.18 25) 100%);
+}
+
+/* Apply theme colors to countdown boxes */
+.theme-party .countdown-box,
+.theme-romantic .countdown-box,
+.theme-professional .countdown-box,
+.theme-spooky .countdown-box,
+.theme-tropical .countdown-box,
+.theme-christmas .countdown-box {
+  background-color: var(--countdown-bg);
+  color: var(--countdown-text);
+}
+
+.theme-party .countdown-box .opacity-70,
+.theme-romantic .countdown-box .opacity-70,
+.theme-professional .countdown-box .opacity-70,
+.theme-spooky .countdown-box .opacity-70,
+.theme-tropical .countdown-box .opacity-70,
+.theme-christmas .countdown-box .opacity-70 {
+  opacity: 0.85;
+}
+
+/* Theme text colors */
+[class^="theme-"]:not(.theme-default) h1,
+[class^="theme-"]:not(.theme-default) h2,
+[class^="theme-"]:not(.theme-default) p,
+[class^="theme-"]:not(.theme-default) .divider {
+  color: white;
+}
+
+.theme-romantic h1,
+.theme-romantic h2,
+.theme-romantic p,
+.theme-romantic .divider {
+  color: oklch(0.25 0.08 0);
+}
+
+.theme-tropical h1,
+.theme-tropical h2,
+.theme-tropical p,
+.theme-tropical .divider {
+  color: oklch(0.2 0.05 150);
+}
+
+/* Theme picker previews */
+.theme-preview {
+  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+}
+
+.theme-preview.theme-default {
+  background: var(--fallback-b2, oklch(var(--b2)));
+  border-color: var(--fallback-b3, oklch(var(--b3)));
+}
+
+.theme-preview.theme-party {
+  background: linear-gradient(135deg, oklch(0.6 0.2 280) 0%, oklch(0.7 0.2 330) 50%, oklch(0.75 0.15 30) 100%);
+  color: white;
+}
+
+.theme-preview.theme-romantic {
+  background: linear-gradient(135deg, oklch(0.9 0.08 350) 0%, oklch(0.85 0.12 10) 100%);
+  color: oklch(0.3 0.1 0);
+}
+
+.theme-preview.theme-professional {
+  background: linear-gradient(135deg, oklch(0.25 0.05 250) 0%, oklch(0.35 0.08 220) 100%);
+  color: white;
+}
+
+.theme-preview.theme-spooky {
+  background: linear-gradient(135deg, oklch(0.15 0.02 270) 0%, oklch(0.25 0.12 30) 100%);
+  color: oklch(0.9 0.15 70);
+}
+
+.theme-preview.theme-tropical {
+  background: linear-gradient(135deg, oklch(0.7 0.15 180) 0%, oklch(0.8 0.18 90) 100%);
+  color: oklch(0.2 0.05 150);
+}
+
+.theme-preview.theme-christmas {
+  background: linear-gradient(135deg, oklch(0.35 0.18 25) 0%, oklch(0.4 0.2 140) 50%, oklch(0.35 0.18 25) 100%);
+  color: white;
+}

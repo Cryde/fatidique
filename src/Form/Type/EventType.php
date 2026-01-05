@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Form\DataTransformer\DateTimeToStringTransformer;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +27,15 @@ class EventType extends AbstractType
             ->add('isDateOnly', CheckboxType::class, ['required' => false, 'label' => 'N\'afficher que la date, sans l\'heure'])
             ->add('label', TextType::class, ['label' => 'Titre'])
             ->add('description', TextareaType::class, ['required' => false, 'label' => 'Description'])
+            ->add('theme', ChoiceType::class, [
+                'label' => 'Thème',
+                'required' => false,
+                'placeholder' => 'Choisir un thème',
+                'choices' => array_combine(
+                    array_map(fn($t) => $t['emoji'] . ' ' . $t['label'], Event::THEMES),
+                    array_keys(Event::THEMES)
+                ),
+            ])
             ->add('private', CheckboxType::class, ['required' => false, 'label' => 'Privé ? *']);
     }
 

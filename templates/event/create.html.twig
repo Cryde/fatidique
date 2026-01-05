@@ -53,6 +53,23 @@
                 {{ form_widget(form.description, {attr: {class: 'textarea textarea-bordered h-24 w-full'}}) }}
             </fieldset>
 
+            <fieldset class="fieldset">
+                <legend class="fieldset-legend">Thème</legend>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-2">
+                    {% for key, theme in constant('App\\Entity\\Event::THEMES') %}
+                    <label class="theme-option cursor-pointer">
+                        <input type="radio" name="{{ form.theme.vars.full_name }}" value="{{ key }}"
+                               class="hidden peer" {{ form.theme.vars.value == key ? 'checked' : '' }}>
+                        <div class="theme-preview theme-{{ key }} peer-checked:ring-2 peer-checked:ring-primary peer-checked:ring-offset-2 rounded-lg p-3 text-center transition-all hover:scale-105">
+                            <span class="text-2xl">{{ theme.emoji }}</span>
+                            <p class="text-xs mt-1 font-medium">{{ theme.label }}</p>
+                        </div>
+                    </label>
+                    {% endfor %}
+                </div>
+                {% do form.theme.setRendered %}
+            </fieldset>
+
             <fieldset class="fieldset form-control">
                 <label class="cursor-pointer label">
                     Privé ? *
