@@ -20,8 +20,9 @@ if (clock && countdown) {
   const pizzasEl = document.querySelector('#pizzas');
   const songsEl = document.querySelector('#songs');
   const walksEl = document.querySelector('#walks');
-
   const targetDate = parseISO(clock.dataset.datetime);
+  const eventLabel = clock.dataset.label;
+  const originalTitle = document.title;
   let intervalId = null;
 
   const setValue = (element, value) => {
@@ -38,9 +39,23 @@ if (clock && countdown) {
     countdown.classList.add('hidden');
     if (funStats) funStats.classList.add('hidden');
     celebration.classList.remove('hidden');
+    document.title = `🎉 ${eventLabel}`;
     if (intervalId) {
       clearInterval(intervalId);
     }
+  };
+
+  const updateTitle = (duration) => {
+    const parts = [];
+    if (duration.years) parts.push(`${duration.years}a`);
+    if (duration.months) parts.push(`${duration.months}m`);
+    if (duration.days) parts.push(`${duration.days}j`);
+    if (duration.hours) parts.push(`${duration.hours}h`);
+    if (duration.minutes) parts.push(`${duration.minutes}min`);
+    if (duration.seconds !== undefined) parts.push(`${duration.seconds}s`);
+
+    const timeStr = parts.slice(0, 3).join(' '); // Show max 3 units
+    document.title = `${timeStr} - ${eventLabel}`;
   };
 
   const updateCountdown = () => {
@@ -62,6 +77,9 @@ if (clock && countdown) {
     setValue(hoursEl, duration.hours || 0);
     setValue(minutesEl, duration.minutes || 0);
     setValue(secondsEl, duration.seconds || 0);
+
+    // Update title
+    updateTitle(duration);
 
     // Fun stats
     const totalHours = differenceInHours(targetDate, now);
