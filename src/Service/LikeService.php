@@ -21,6 +21,28 @@ class LikeService
         return hash('sha256', $this->appSecret . $ip);
     }
 
+    public function generateUsername(string $ip): string
+    {
+        $adjectives = [
+            'Joyeux', 'Rigolo', 'Curieux', 'Malin', 'Rusé', 'Gentil', 'Doux', 'Brave',
+            'Futé', 'Vif', 'Calme', 'Sage', 'Fier', 'Grand', 'Petit', 'Cool',
+            'Rapide', 'Agile', 'Discret', 'Magique', 'Brillant', 'Timide', 'Rêveur', 'Zen'
+        ];
+        $nouns = [
+            'Panda', 'Koala', 'Lion', 'Tigre', 'Ours', 'Loup', 'Renard', 'Chat',
+            'Lapin', 'Hibou', 'Aigle', 'Dauphin', 'Pingouin', 'Licorne', 'Dragon',
+            'Montagne', 'Océan', 'Soleil', 'Lune', 'Étoile', 'Nuage', 'Forêt', 'Rivière',
+            'Colibri', 'Papillon', 'Phoenix', 'Aurore', 'Cascade', 'Volcan', 'Corail', 'Bambou'
+        ];
+
+        $hash = $this->hashIp($ip);
+        $adjIndex = hexdec(substr($hash, 0, 2)) % count($adjectives);
+        $nounIndex = hexdec(substr($hash, 2, 2)) % count($nouns);
+        $number = hexdec(substr($hash, 4, 2)) % 1000;
+
+        return $nouns[$nounIndex] . $adjectives[$adjIndex] . $number;
+    }
+
     public function hasLiked(Event $event, string $ip): bool
     {
         $ipHash = $this->hashIp($ip);

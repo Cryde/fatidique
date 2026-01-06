@@ -29,4 +29,12 @@ class EventLikeRepository extends ServiceEntityRepository
             'ipHash' => $ipHash,
         ]);
     }
+
+    public function countAll(): int
+    {
+        return (int) $this->createQueryBuilder('l')
+            ->select('COUNT(l.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 }

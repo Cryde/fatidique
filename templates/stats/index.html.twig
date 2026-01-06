@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistiques - Fatidique{% endblock %}
+
+{% block body %}
+    <div class="max-w-4xl mx-auto px-4 mt-10">
+        <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+            </svg>
+            Statistiques
+        </h1>
+        <p class="text-base opacity-70 mb-10">Les chiffres de la communauté Fatidique</p>
+
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-12">
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                </div>
+                <div class="stat-title">Compteurs créés</div>
+                <div class="stat-value text-primary">{{ stats.totalEvents }}</div>
+            </div>
+
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-error">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
+                        <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                    </svg>
+                </div>
+                <div class="stat-title">Likes donnés</div>
+                <div class="stat-value text-error">{{ stats.totalLikes }}</div>
+            </div>
+
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+                    </svg>
+                </div>
+                <div class="stat-title">Messages</div>
+                <div class="stat-value text-info">{{ stats.totalComments }}</div>
+            </div>
+
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                    </svg>
+                </div>
+                <div class="stat-title">Se terminent aujourd'hui</div>
+                <div class="stat-value text-warning">{{ stats.eventsEndingToday }}</div>
+            </div>
+
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-2xl">
+                    {{ themes[stats.mostPopularTheme].emoji }}
+                </div>
+                <div class="stat-title">Thème préféré</div>
+                <div class="stat-value text-lg">{{ themes[stats.mostPopularTheme].label }}</div>
+            </div>
+
+            <div class="stat bg-base-200 rounded-box p-6">
+                <div class="stat-figure text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 7.5 7.5 3m0 0L12 7.5M7.5 3v13.5m13.5 0L16.5 21m0 0L12 16.5m4.5 4.5V7.5" />
+                    </svg>
+                </div>
+                <div class="stat-title">Durée moyenne</div>
+                <div class="stat-value text-secondary">{{ stats.averageCountdownDays }}</div>
+                <div class="stat-desc">jours</div>
+            </div>
+        </div>
+
+        {% if stats.themeDistribution|length > 0 %}
+        <div class="mb-12">
+            <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
+                </svg>
+                Distribution des thèmes
+            </h2>
+            <div class="space-y-3">
+                {% set maxCount = stats.themeDistribution|first %}
+                {% for themeKey, count in stats.themeDistribution %}
+                    {% set theme = themes[themeKey] ?? themes['default'] %}
+                    <div class="flex items-center gap-3">
+                        <span class="text-xl w-8">{{ theme.emoji }}</span>
+                        <span class="w-28 text-sm">{{ theme.label }}</span>
+                        <div class="flex-1 bg-base-300 rounded-full h-4 overflow-hidden">
+                            <div class="bg-primary h-full rounded-full transition-all" style="width: {{ (count / maxCount * 100)|round }}%"></div>
+                        </div>
+                        <span class="w-12 text-right text-sm font-mono">{{ count }}</span>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="text-center mb-16">
+            <p class="text-sm opacity-60 mb-4">Envie de participer ?</p>
+            <a href="{{ path('event_create') }}" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Créer un compteur
+            </a>
+        </div>
+    </div>
+{% endblock %}

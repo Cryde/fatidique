@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Event;
 use App\Form\Type\EventType;
+use App\Repository\CommentRepository;
 use App\Repository\EventRepository;
 use App\Service\EventSlug;
 use App\Service\LikeService;
@@ -56,13 +58,14 @@ class EventController extends AbstractController
     }
 
     #[Route('/{slug:event}', name: 'event_view')]
-    public function show(Event $event, LikeService $likeService, Request $request): Response
+    public function show(Event $event, LikeService $likeService, CommentRepository $commentRepository, Request $request): Response
     {
         $ip = $request->getClientIp() ?? '127.0.0.1';
 
         return $this->render('event/view.html.twig', [
             'event' => $event,
             'hasLiked' => $likeService->hasLiked($event, $ip),
+            'comments' => $commentRepository->findByEvent($event),
         ]);
     }
 
@@ -73,5 +76,39 @@ class EventController extends AbstractController
         $result = $likeService->toggleLike($event, $ip);
 
         return new JsonResponse($result);
+    }
+
+    #[Route('/{slug:event}/comment', name: 'event_comment', methods: ['POST'])]
+    public function comment(Event $event, LikeService $likeService, CommentRepository $commentRepository, Request $request): Response
+    {
+        $ip = $request->getClientIp() ?? '127.0.0.1';
+        $ipHash = $likeService->hashIp($ip);
+
+        // Check spam limit (5 comments per day per IP)
+        if ($commentRepository->countByIpHashToday($ipHash) >= 5) {
+            $this->addFlash('error', 'Vous avez atteint la limite de commentaires pour aujourd\'hui.');
+            return $this->redirectToRoute('event_view', ['slug' => $event->getSlug()]);
+        }
+
+        $content = trim($request->request->get('content', ''));
+
+        if (empty($content) || strlen($content) > 500) {
+            $this->addFlash('error', 'Le commentaire doit contenir entre 1 et 500 caractères.');
+            return $this->redirectToRoute('event_view', ['slug' => $event->getSlug()]);
+        }
+
+        $username = $likeService->generateUsername($ip);
+
+        $comment = new Comment();
+        $comment->setEvent($event);
+        $comment->setAuthor($username);
+        $comment->setContent($content);
+        $comment->setIpHash($ipHash);
+
+        $this->entityManager->persist($comment);
+        $this->entityManager->flush();
+
+        $this->addFlash('success', 'Commentaire ajouté !');
+        return $this->redirectToRoute('event_view', ['slug' => $event->getSlug()]);
     }
 }

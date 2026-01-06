@@ -47,6 +47,10 @@ class Event
     #[ORM\OneToMany(targetEntity: EventLike::class, mappedBy: 'event', cascade: ['remove'])]
     private Collection $likes;
 
+    /** @var Collection<int, Comment> */
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'event', cascade: ['remove'])]
+    private Collection $comments;
+
     public const THEMES = [
         'default' => ['label' => 'Classique', 'emoji' => '⏱️', 'particle' => '✦'],
         'party' => ['label' => 'Fête', 'emoji' => '🎉', 'particle' => '✨'],
@@ -68,6 +72,7 @@ class Event
         $this->private = false;
         $this->isDateOnly = false;
         $this->likes = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -187,5 +192,18 @@ class Event
     public function getLikesCount(): int
     {
         return $this->likes->count();
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function getCommentsCount(): int
+    {
+        return $this->comments->count();
     }
 }
