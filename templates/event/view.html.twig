@@ -26,8 +26,8 @@
     </div>
 
     <div id="clock"
-         data-datetime="{{ event.date | date(constant('\DATE_ATOM')) }}"
-         data-created="{{ event.created ? event.created | date(constant('\DATE_ATOM')) : '' }}"
+         data-datetime="{{ event.date | date('Y-m-d\\TH:i:sP') }}"
+         data-created="{{ event.created ? event.created | date('Y-m-d\\TH:i:sP') : '' }}"
          data-date-only="{{ event.isDateOnly ? '1' : '0' }}"
          data-label="{{ event.label }}"></div>
 
