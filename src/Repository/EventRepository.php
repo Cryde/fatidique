@@ -214,4 +214,26 @@ class EventRepository extends ServiceEntityRepository
 
         return (int) $qb->getQuery()->getSingleScalarResult();
     }
+
+    public function findRandomPublicEvent(): ?Event
+    {
+        $count = $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->where('e.private = 0')
+            ->getQuery()
+            ->getSingleScalarResult();
+
+        if ($count === 0) {
+            return null;
+        }
+
+        $offset = random_int(0, $count - 1);
+
+        return $this->createQueryBuilder('e')
+            ->where('e.private = 0')
+            ->setFirstResult($offset)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

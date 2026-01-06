@@ -6,6 +6,7 @@ use App\Entity\Event;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -47,5 +48,18 @@ class ExploreController extends AbstractController
             'totalResults' => $totalResults,
             'themes' => Event::THEMES,
         ]);
+    }
+
+    #[Route('/random', name: 'random_event', priority: 10)]
+    public function random(EventRepository $eventRepository): Response
+    {
+        $event = $eventRepository->findRandomPublicEvent();
+
+        if (!$event) {
+            $this->addFlash('info', 'Aucun événement public disponible.');
+            return $this->redirectToRoute('explore');
+        }
+
+        return $this->redirectToRoute('event_view', ['slug' => $event->getSlug()]);
     }
 }
