@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Explorer - Fatidique{% endblock %}
+
+{% block body %}
+    <div class="max-w-5xl mx-auto px-4 mt-10">
+        <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+            Explorer
+        </h1>
+        <p class="text-base opacity-70 mb-8">Rechercher et parcourir tous les événements</p>
+
+        <form method="GET" action="{{ path('explore') }}" class="mb-8">
+            <div class="flex flex-col md:flex-row gap-4">
+                <div class="flex-1">
+                    <div class="join w-full">
+                        <input type="text" name="q" value="{{ query }}" placeholder="Rechercher..."
+                               class="input input-bordered join-item w-full">
+                        <button type="submit" class="btn btn-primary join-item">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <select name="theme" class="select select-bordered" onchange="this.form.submit()">
+                        <option value="all" {{ theme == 'all' ? 'selected' : '' }}>Tous les thèmes</option>
+                        {% for key, themeData in themes %}
+                            <option value="{{ key }}" {{ theme == key ? 'selected' : '' }}>{{ themeData.emoji }} {{ themeData.label }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <div class="join">
+                        <input type="radio" name="period" value="future" class="join-item btn btn-sm"
+                               aria-label="À venir" {{ period == 'future' ? 'checked' : '' }} onchange="this.form.submit()">
+                        <input type="radio" name="period" value="past" class="join-item btn btn-sm"
+                               aria-label="Passés" {{ period == 'past' ? 'checked' : '' }} onchange="this.form.submit()">
+                        <input type="radio" name="period" value="all" class="join-item btn btn-sm"
+                               aria-label="Tous" {{ period == 'all' ? 'checked' : '' }} onchange="this.form.submit()">
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p class="text-sm opacity-60 mb-4">{{ totalResults }} résultat{{ totalResults > 1 ? 's' : '' }}</p>
+
+        {% if events|length > 0 %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                {% for event in events %}
+                    {{ _self.event_card(event, themes) }}
+                {% endfor %}
+            </div>
+
+            {% if totalPages > 1 %}
+                <div class="flex justify-center gap-2 mb-16">
+                    {% if page > 1 %}
+                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page - 1}) }}"
+                           class="btn btn-outline btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                            </svg>
+                        </a>
+                    {% endif %}
+
+                    {% for p in max(1, page - 2)..min(totalPages, page + 2) %}
+                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: p}) }}"
+                           class="btn btn-sm {{ p == page ? 'btn-primary' : 'btn-outline' }}">
+                            {{ p }}
+                        </a>
+                    {% endfor %}
+
+                    {% if page < totalPages %}
+                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page + 1}) }}"
+                           class="btn btn-outline btn-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                            </svg>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="text-center py-16">
+                <div class="text-6xl mb-4">🔍</div>
+                <p class="text-lg opacity-70 mb-4">Aucun événement trouvé</p>
+                <a href="{{ path('event_create') }}" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    </svg>
+                    Créer le premier
+                </a>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% macro event_card(event, themes) %}
+    {% set theme = themes[event.themeOrDefault] %}
+    {% set now = date() %}
+    {% set isPast = event.date < now %}
+    {% set diff = event.date.diff(now) %}
+
+    <a href="{{ path('event_view', {slug: event.slug}) }}"
+       class="card card-compact shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] overflow-hidden {{ isPast ? 'opacity-70' : '' }}">
+        <div class="theme-preview theme-{{ event.themeOrDefault }} p-6 min-h-32 flex flex-col justify-between">
+            <div class="flex justify-between items-start">
+                <span class="text-3xl">{{ theme.emoji }}</span>
+                <div class="flex gap-2">
+                    {% if event.likesCount > 0 %}
+                        <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0 gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3">
+                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                            </svg>
+                            {{ event.likesCount }}
+                        </span>
+                    {% endif %}
+                    <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0">
+                        {% if isPast %}
+                            {% if diff.days == 0 %}
+                                Aujourd'hui
+                            {% elseif diff.days == 1 %}
+                                Hier
+                            {% else %}
+                                Il y a {{ diff.days }}j
+                            {% endif %}
+                        {% else %}
+                            {% if diff.days == 0 %}
+                                Aujourd'hui
+                            {% elseif diff.days == 1 %}
+                                Demain
+                            {% else %}
+                                {{ diff.days }}j
+                            {% endif %}
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div>
+                <h3 class="card-title text-lg mt-4 line-clamp-2">{{ event.label }}</h3>
+                <p class="text-xs opacity-70 mt-1">{{ event.date|date('d/m/Y H:i') }}</p>
+            </div>
+        </div>
+    </a>
+{% endmacro %}

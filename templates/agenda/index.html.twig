@@ -1,0 +1,126 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Agenda - {{ monthName }} {{ year }}{% endblock %}
+
+{% block body %}
+    <div class="max-w-4xl mx-auto px-4 mt-10">
+        <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+            </svg>
+            Agenda
+        </h1>
+        <p class="text-base opacity-70 mb-8">Tous les événements publics sur un calendrier</p>
+
+        <div class="flex items-center justify-between mb-6">
+            <a href="{{ path('agenda', {month: prevMonth}) }}" class="btn btn-ghost btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <h2 class="text-xl font-bold">{{ monthName }} {{ year }}</h2>
+            <a href="{{ path('agenda', {month: nextMonth}) }}" class="btn btn-ghost btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+            </a>
+        </div>
+
+        <div class="bg-base-200 rounded-box p-4">
+            <p class="text-xs opacity-60 text-center mb-3">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline-block mr-1">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672 13.684 16.6m0 0-2.51 2.225.569-9.47 5.227 7.917-3.286-.672ZM12 2.25V4.5m5.834.166-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243-1.59-1.59" />
+                </svg>
+                Cliquez sur un jour pour voir les événements
+            </p>
+            <div class="grid grid-cols-7 gap-1 text-center text-sm font-medium mb-2">
+                <div class="py-2">Lun</div>
+                <div class="py-2">Mar</div>
+                <div class="py-2">Mer</div>
+                <div class="py-2">Jeu</div>
+                <div class="py-2">Ven</div>
+                <div class="py-2 text-primary">Sam</div>
+                <div class="py-2 text-primary">Dim</div>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1">
+                {% for i in 1..(startDayOfWeek - 1) %}
+                    <div class="aspect-square"></div>
+                {% endfor %}
+
+                {% for day in 1..daysInMonth %}
+                    {% set dayEvents = eventsByDay[day] ?? [] %}
+                    {% set hasEvents = dayEvents|length > 0 %}
+
+                    <div class="aspect-square bg-base-100 rounded-lg p-1 flex flex-col {% if hasEvents %}cursor-pointer hover:bg-base-300 hover:ring-2 hover:ring-primary transition-all{% endif %}"
+                         {% if hasEvents %}onclick="showDayEvents({{ day }})"{% endif %}>
+                        <span class="text-xs font-medium">{{ day }}</span>
+                        {% if hasEvents %}
+                            <div class="flex-1 flex items-center justify-center gap-0.5 flex-wrap">
+                                {% for event in dayEvents|slice(0, 4) %}
+                                    {% set theme = themes[event.themeOrDefault] %}
+                                    <span class="w-2 h-2 rounded-full theme-preview theme-{{ event.themeOrDefault }}" title="{{ event.label }}"></span>
+                                {% endfor %}
+                                {% if dayEvents|length > 4 %}
+                                    <span class="text-xs opacity-60">+{{ dayEvents|length - 4 }}</span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% for day in 1..daysInMonth %}
+            {% set dayEvents = eventsByDay[day] ?? [] %}
+            {% if dayEvents|length > 0 %}
+                <div id="day-{{ day }}" class="day-events hidden mt-6 bg-base-200 rounded-box p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="font-bold">{{ day }} {{ monthName }}</h3>
+                        <button onclick="hideDayEvents({{ day }})" class="btn btn-ghost btn-sm btn-circle">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="space-y-2">
+                        {% for event in dayEvents %}
+                            {% set theme = themes[event.themeOrDefault] %}
+                            <a href="{{ path('event_view', {slug: event.slug}) }}"
+                               class="flex items-center gap-3 p-3 bg-base-100 rounded-lg hover:bg-base-300 transition-colors">
+                                <span class="text-2xl">{{ theme.emoji }}</span>
+                                <div class="flex-1 min-w-0">
+                                    <p class="font-medium truncate">{{ event.label }}</p>
+                                    <p class="text-xs opacity-60">{{ event.date|date('H:i') }}</p>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 opacity-50">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                                </svg>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <div class="text-center mt-8 mb-16">
+            <a href="{{ path('explore') }}" class="btn btn-outline btn-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                Rechercher des événements
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function showDayEvents(day) {
+            document.querySelectorAll('.day-events').forEach(el => el.classList.add('hidden'));
+            document.getElementById('day-' + day)?.classList.remove('hidden');
+            document.getElementById('day-' + day)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        function hideDayEvents(day) {
+            document.getElementById('day-' + day)?.classList.add('hidden');
+        }
+    </script>
+{% endblock %}

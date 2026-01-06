@@ -132,4 +132,86 @@ class EventRepository extends ServiceEntityRepository
 
         return round($totalDays / count($events), 1);
     }
+
+    public function findPublicEventsByMonth(int $year, int $month): array
+    {
+        $start = new \DateTime("$year-$month-01");
+        $end = (clone $start)->modify('last day of this month')->setTime(23, 59, 59);
+
+        return $this->createQueryBuilder('e')
+            ->where('e.private = 0')
+            ->andWhere('e.date >= :start')
+            ->andWhere('e.date <= :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end)
+            ->orderBy('e.date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function searchPublicEvents(?string $query, ?string $theme, string $period, int $page, int $limit): array
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->where('e.private = 0')
+            ->orderBy('e.date', 'ASC');
+
+        if ($query) {
+            $qb->andWhere('e.label LIKE :query OR e.description LIKE :query')
+               ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($theme && $theme !== 'all') {
+            if ($theme === 'default') {
+                $qb->andWhere('e.theme IS NULL OR e.theme = :theme')
+                   ->setParameter('theme', 'default');
+            } else {
+                $qb->andWhere('e.theme = :theme')
+                   ->setParameter('theme', $theme);
+            }
+        }
+
+        $now = new \DateTime();
+        if ($period === 'future') {
+            $qb->andWhere('e.date >= :now')->setParameter('now', $now);
+        } elseif ($period === 'past') {
+            $qb->andWhere('e.date < :now')->setParameter('now', $now);
+        }
+
+        return $qb
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countSearchResults(?string $query, ?string $theme, string $period): int
+    {
+        $qb = $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->where('e.private = 0');
+
+        if ($query) {
+            $qb->andWhere('e.label LIKE :query OR e.description LIKE :query')
+               ->setParameter('query', '%' . $query . '%');
+        }
+
+        if ($theme && $theme !== 'all') {
+            if ($theme === 'default') {
+                $qb->andWhere('e.theme IS NULL OR e.theme = :theme')
+                   ->setParameter('theme', 'default');
+            } else {
+                $qb->andWhere('e.theme = :theme')
+                   ->setParameter('theme', $theme);
+            }
+        }
+
+        $now = new \DateTime();
+        if ($period === 'future') {
+            $qb->andWhere('e.date >= :now')->setParameter('now', $now);
+        } elseif ($period === 'past') {
+            $qb->andWhere('e.date < :now')->setParameter('now', $now);
+        }
+
+        return (int) $qb->getQuery()->getSingleScalarResult();
+    }
 }
