@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -41,6 +43,10 @@ class Event
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $theme = null;
 
+    /** @var Collection<int, EventLike> */
+    #[ORM\OneToMany(targetEntity: EventLike::class, mappedBy: 'event', cascade: ['remove'])]
+    private Collection $likes;
+
     public const THEMES = [
         'default' => ['label' => 'Classique', 'emoji' => '⏱️', 'particle' => '✦'],
         'party' => ['label' => 'Fête', 'emoji' => '🎉', 'particle' => '✨'],
@@ -61,6 +67,7 @@ class Event
         $this->description = '';
         $this->private = false;
         $this->isDateOnly = false;
+        $this->likes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -167,5 +174,18 @@ class Event
     public function getThemeOrDefault(): string
     {
         return $this->theme ?? 'default';
+    }
+
+    /**
+     * @return Collection<int, EventLike>
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function getLikesCount(): int
+    {
+        return $this->likes->count();
     }
 }

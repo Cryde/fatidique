@@ -6,9 +6,11 @@ use App\Entity\Event;
 use App\Form\Type\EventType;
 use App\Repository\EventRepository;
 use App\Service\EventSlug;
+use App\Service\LikeService;
 use App\Service\SlugRandomize;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -53,8 +55,22 @@ class EventController extends AbstractController
     }
 
     #[Route('/{slug:event}', name: 'event_view')]
-    public function show(Event $event): Response
+    public function show(Event $event, LikeService $likeService, Request $request): Response
     {
-        return $this->render('event/view.html.twig', ['event' => $event]);
+        $ip = $request->getClientIp() ?? '127.0.0.1';
+
+        return $this->render('event/view.html.twig', [
+            'event' => $event,
+            'hasLiked' => $likeService->hasLiked($event, $ip),
+        ]);
+    }
+
+    #[Route('/{slug:event}/like', name: 'event_like', methods: ['POST'])]
+    public function like(Event $event, LikeService $likeService, Request $request): JsonResponse
+    {
+        $ip = $request->getClientIp() ?? '127.0.0.1';
+        $result = $likeService->toggleLike($event, $ip);
+
+        return new JsonResponse($result);
     }
 }
