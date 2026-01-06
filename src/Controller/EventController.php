@@ -37,7 +37,7 @@ class EventController extends AbstractController
      * @throws \Exception
      */
     #[Route('/create', name: 'event_create')]
-    public function create(SlugRandomize $slugRandomize, Request $request, EventSlug $eventSlug): Response
+    public function create(SlugRandomize $slugRandomize, Request $request, EventSlug $eventSlug, LikeService $likeService): Response
     {
         $event = new Event();
         $form  = $this->createForm(EventType::class, $event);
@@ -48,6 +48,11 @@ class EventController extends AbstractController
             $em = $this->entityManager;
             $event->setSlug($eventSlug->create($event->getLabel()));
             $slugRandomize->randomizeSlug($event);
+
+            // Set author based on IP
+            $ip = $request->getClientIp() ?? '127.0.0.1';
+            $event->setAuthor($likeService->generateUsername($ip));
+
             $em->persist($event);
             $em->flush();
 

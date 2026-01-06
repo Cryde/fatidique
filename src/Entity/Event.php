@@ -43,6 +43,9 @@ class Event
     #[ORM\Column(length: 30, nullable: true)]
     private ?string $theme = null;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $author = null;
+
     /** @var Collection<int, EventLike> */
     #[ORM\OneToMany(targetEntity: EventLike::class, mappedBy: 'event', cascade: ['remove'])]
     private Collection $likes;
@@ -205,5 +208,17 @@ class Event
     public function getCommentsCount(): int
     {
         return $this->comments->count();
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): static
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

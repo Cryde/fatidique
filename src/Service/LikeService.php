@@ -21,26 +21,37 @@ class LikeService
         return hash('sha256', $this->appSecret . $ip);
     }
 
+    private const ADJECTIVES = [
+        'Joyeux', 'Rigolo', 'Curieux', 'Malin', 'Rusé', 'Gentil', 'Doux', 'Brave',
+        'Futé', 'Vif', 'Calme', 'Sage', 'Fier', 'Grand', 'Petit', 'Cool',
+        'Rapide', 'Agile', 'Discret', 'Magique', 'Brillant', 'Timide', 'Rêveur', 'Zen'
+    ];
+
+    private const NOUNS = [
+        'Panda', 'Koala', 'Lion', 'Tigre', 'Ours', 'Loup', 'Renard', 'Chat',
+        'Lapin', 'Hibou', 'Aigle', 'Dauphin', 'Pingouin', 'Licorne', 'Dragon',
+        'Montagne', 'Océan', 'Soleil', 'Lune', 'Étoile', 'Nuage', 'Forêt', 'Rivière',
+        'Colibri', 'Papillon', 'Phoenix', 'Aurore', 'Cascade', 'Volcan', 'Corail', 'Bambou'
+    ];
+
     public function generateUsername(string $ip): string
     {
-        $adjectives = [
-            'Joyeux', 'Rigolo', 'Curieux', 'Malin', 'Rusé', 'Gentil', 'Doux', 'Brave',
-            'Futé', 'Vif', 'Calme', 'Sage', 'Fier', 'Grand', 'Petit', 'Cool',
-            'Rapide', 'Agile', 'Discret', 'Magique', 'Brillant', 'Timide', 'Rêveur', 'Zen'
-        ];
-        $nouns = [
-            'Panda', 'Koala', 'Lion', 'Tigre', 'Ours', 'Loup', 'Renard', 'Chat',
-            'Lapin', 'Hibou', 'Aigle', 'Dauphin', 'Pingouin', 'Licorne', 'Dragon',
-            'Montagne', 'Océan', 'Soleil', 'Lune', 'Étoile', 'Nuage', 'Forêt', 'Rivière',
-            'Colibri', 'Papillon', 'Phoenix', 'Aurore', 'Cascade', 'Volcan', 'Corail', 'Bambou'
-        ];
+        return $this->generateUsernameFromHash($this->hashIp($ip));
+    }
 
-        $hash = $this->hashIp($ip);
-        $adjIndex = hexdec(substr($hash, 0, 2)) % count($adjectives);
-        $nounIndex = hexdec(substr($hash, 2, 2)) % count($nouns);
+    public function generateUsernameFromString(string $input): string
+    {
+        $hash = hash('sha256', $this->appSecret . $input);
+        return $this->generateUsernameFromHash($hash);
+    }
+
+    private function generateUsernameFromHash(string $hash): string
+    {
+        $adjIndex = hexdec(substr($hash, 0, 2)) % count(self::ADJECTIVES);
+        $nounIndex = hexdec(substr($hash, 2, 2)) % count(self::NOUNS);
         $number = hexdec(substr($hash, 4, 2)) % 1000;
 
-        return $nouns[$nounIndex] . $adjectives[$adjIndex] . $number;
+        return self::NOUNS[$nounIndex] . self::ADJECTIVES[$adjIndex] . $number;
     }
 
     public function hasLiked(Event $event, string $ip): bool
