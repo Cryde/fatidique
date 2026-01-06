@@ -42,4 +42,18 @@ class EventRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findMostLikedPublicEvents(int $limit = 5): array
+    {
+        return $this->createQueryBuilder('event')
+            ->leftJoin('event.likes', 'likes')
+            ->where('event.private = 0')
+            ->andWhere('event.date > CURRENT_DATE()')
+            ->groupBy('event.id')
+            ->having('COUNT(likes.id) > 0')
+            ->orderBy('COUNT(likes.id)', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }
