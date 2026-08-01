@@ -1,11 +1,15 @@
 import './countdown.js';
 import './particles.js';
 
+// Emits the static files Twig reaches via asset(), which resolves through the
+// Vite manifest (see config/packages/assets.yaml). 'eager' is required: without
+// it Vite 8 tree-shakes the unused glob away, the assets never reach the
+// manifest, and every page 500s on "not found in manifest file".
 import.meta.glob([
   './images/**',
   './*.png',
   './*.ico',
-]);
+], { eager: true });
 
 // Copy link button
 const copyLinkBtn = document.querySelector('#copy-link');
