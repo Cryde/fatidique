@@ -91,6 +91,13 @@ if (themeRadios.length > 0) {
       removeThemeClasses();
       if (e.target.value) {
         document.body.classList.add(`theme-${e.target.value}`);
+
+        // Add celebration animation to selected theme card
+        const card = e.target.nextElementSibling;
+        if (card) {
+          card.classList.add('animate-scale-pop');
+          setTimeout(() => card.classList.remove('animate-scale-pop'), 300);
+        }
       }
     });
 
@@ -101,4 +108,73 @@ if (themeRadios.length > 0) {
     }
   });
 }
+
+// ===== MICRO-INTERACTIONS =====
+
+// Enhanced form field focus effects
+const initFormFieldEffects = () => {
+  document.querySelectorAll('.fieldset').forEach(fieldset => {
+    const input = fieldset.querySelector('input, textarea, select');
+    if (!input) return;
+
+    input.addEventListener('focus', () => {
+      fieldset.style.transform = 'scale(1.01)';
+      fieldset.style.transition = 'transform 0.2s ease';
+    });
+
+    input.addEventListener('blur', () => {
+      fieldset.style.transform = 'scale(1)';
+    });
+  });
+};
+
+// Hint the compositor before a card lifts, and release the hint afterwards so
+// we don't keep a layer alive for every card on the page.
+const initHoverFeedback = () => {
+  document.querySelectorAll('.card-hover-lift').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      card.style.willChange = 'transform, box-shadow';
+    });
+
+    card.addEventListener('mouseleave', () => {
+      setTimeout(() => {
+        card.style.willChange = 'auto';
+      }, 300);
+    });
+  });
+};
+
+// Progress steps on the create page. Each fieldset declares its step via
+// data-step, so adding or reordering fields cannot desync the indicator.
+const initProgressSteps = () => {
+  const steps = document.querySelectorAll('.steps-playful .step');
+  const fieldsets = document.querySelectorAll('.fieldset[data-step]');
+
+  if (steps.length === 0 || fieldsets.length === 0) return;
+
+  const activateStep = (activeStep) => {
+    steps.forEach((step, index) => {
+      step.classList.toggle('step-primary', index <= activeStep);
+    });
+  };
+
+  fieldsets.forEach(fieldset => {
+    const step = Number(fieldset.dataset.step);
+
+    // 'focusin' bubbles up from nested inputs, unlike 'focus'. 'change' covers
+    // the theme picker, whose radios are hidden and never receive focus.
+    fieldset.addEventListener('focusin', () => activateStep(step));
+    fieldset.addEventListener('change', () => activateStep(step));
+  });
+};
+
+// Initialize all micro-interactions
+document.addEventListener('DOMContentLoaded', () => {
+  initFormFieldEffects();
+  initHoverFeedback();
+  initProgressSteps();
+
+  // Add loaded class for any initial animations
+  document.body.classList.add('js-loaded');
+});
 

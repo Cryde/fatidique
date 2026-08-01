@@ -12,12 +12,9 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
   transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
-/* Mood Themes */
-.theme-default {
-  --countdown-bg: var(--fallback-b2, oklch(var(--b2)));
-  --countdown-text: var(--fallback-bc, oklch(var(--bc)));
-}
-
+/* Mood Themes.
+   'default' has no entry on purpose: its countdown boxes keep the bg-base-200
+   utility already on the markup, so the rule below deliberately excludes it. */
 .theme-party {
   --countdown-bg: oklch(0.7 0.15 330);
   --countdown-text: white;
@@ -276,8 +273,8 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
 }
 
 .theme-preview.theme-default {
-  background: var(--fallback-b2, oklch(var(--b2)));
-  border-color: var(--fallback-b3, oklch(var(--b3)));
+  background: var(--color-base-200);
+  border-color: var(--color-base-300);
 }
 
 .theme-preview.theme-party {
@@ -313,4 +310,291 @@ label, .label, .fieldset-legend, blockquote, figcaption, cite {
 .theme-preview.theme-rainy {
   background: linear-gradient(180deg, oklch(0.35 0.08 240) 0%, oklch(0.45 0.1 220) 100%);
   color: white;
+}
+
+/* ===== PLAYFUL ANIMATIONS ===== */
+
+/* Floating animations for decorative elements */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes float-medium {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(-5deg); }
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float-slow { animation: float-slow 6s ease-in-out infinite; }
+.animate-float-medium { animation: float-medium 4s ease-in-out infinite; }
+.animate-float-fast { animation: float-fast 3s ease-in-out infinite; }
+
+/* Fade in up - for staggered card entrances.
+   Animates the individual 'translate' property rather than the 'transform'
+   shorthand: animations outrank normal declarations, so a filled 'transform'
+   keyframe would permanently override hover effects like .card-hover-lift.
+   Individual transform properties compose with 'transform' instead. */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    translate: 0 30px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+
+/* 'both' fill is required: with only 'forwards', a delayed element renders at
+   full opacity until its delay elapses, then snaps to invisible and fades in. */
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out both;
+}
+
+/* Fade in - simple opacity animation */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out both;
+}
+
+/* Subtle bounce for icons and emojis */
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
+}
+
+/* Sparkle/glow animation for active elements */
+@keyframes sparkle {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+  50% { transform: scale(1.15) rotate(5deg); opacity: 0.85; }
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+/* Shimmer effect for hover states */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.shimmer-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  transition: none;
+}
+
+.shimmer-hover:hover::before {
+  animation: shimmer 0.6s ease-out;
+}
+
+/* Wiggle animation for attention */
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-5deg); }
+  75% { transform: rotate(5deg); }
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out;
+}
+
+.hover-wiggle:hover {
+  animation: wiggle 0.4s ease-in-out;
+}
+
+/* Scale pop animation */
+@keyframes scale-pop {
+  0% { transform: scale(0.95); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-scale-pop {
+  animation: scale-pop 0.3s ease-out;
+}
+
+/* Staggered animation delays */
+.delay-75 { animation-delay: 75ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-350 { animation-delay: 350ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+
+/* ===== ENHANCED INTERACTIONS ===== */
+
+/* Card hover lift effect */
+.card-hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.2);
+}
+
+/* Button shine effect */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn-shine:hover::after {
+  left: 100%;
+}
+
+/* Form field focus glow */
+.input-glow:focus,
+.textarea-glow:focus {
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--color-primary) 15%, transparent);
+}
+
+/* Icon container with background */
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--color-primary) 10%, transparent);
+  transition: background 0.3s ease;
+}
+
+.icon-container:hover {
+  background: color-mix(in oklab, var(--color-primary) 20%, transparent);
+}
+
+/* Gradient text */
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Badge bounce on appear */
+.badge-animated {
+  animation: scale-pop 0.4s ease-out;
+}
+
+/* Theme option enhancements */
+.theme-option-enhanced {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.theme-option-enhanced:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.25);
+}
+
+/* Drawer toggle icon. Driven by #nav-drawer rather than DaisyUI's swap (which
+   needs its own checkbox) so the icon stays correct when the drawer is closed
+   by clicking the overlay instead of the button. */
+.nav-toggle {
+  display: grid;
+  place-items: center;
+}
+
+.nav-toggle > svg {
+  grid-area: 1 / 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-toggle-close {
+  transform: rotate(-45deg);
+  opacity: 0;
+}
+
+#nav-drawer:checked ~ .drawer-content .nav-toggle-open {
+  transform: rotate(45deg);
+  opacity: 0;
+}
+
+#nav-drawer:checked ~ .drawer-content .nav-toggle-close {
+  transform: rotate(0);
+  opacity: 1;
+}
+
+/* Empty state styling */
+.empty-state-icon {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+/* Pagination button hover */
+.pagination-btn {
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.pagination-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Search input focus expansion */
+.search-input-animated {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.search-input-animated:focus {
+  box-shadow: 0 4px 20px -5px color-mix(in oklab, var(--color-primary) 30%, transparent);
+}
+
+/* Lucky button special styling */
+.btn-lucky {
+  background: linear-gradient(135deg, oklch(0.6 0.15 140) 0%, oklch(0.7 0.2 100) 100%);
+  border: none;
+  color: white;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-lucky:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px -5px oklch(0.6 0.15 140 / 0.4);
+}
+
+/* Progress steps enhancement */
+.steps-playful .step::before {
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.steps-playful .step-primary::before {
+  transform: scale(1.1);
 }

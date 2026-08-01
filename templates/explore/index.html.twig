@@ -4,100 +4,227 @@
 
 {% block body %}
     <div class="max-w-5xl mx-auto px-4 mt-10">
-        <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-            </svg>
-            Explorer
-        </h1>
-        <p class="text-base opacity-70 mb-8">Rechercher et parcourir tous les événements</p>
+        {# Page Header #}
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8 animate-fade-in">
+            <div>
+                <h1 class="text-3xl font-bold mb-2 flex items-center gap-3">
+                    <div class="icon-container">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                             class="w-7 h-7 text-primary animate-pulse">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                    </div>
+                    Explorer
+                    <span class="badge badge-lg badge-primary badge-animated">{{ totalResults }}</span>
+                </h1>
+                <p class="text-base opacity-70 ml-14">Rechercher et parcourir tous les événements</p>
+            </div>
 
-        <div class="flex justify-end mb-4">
-            <a href="{{ path('random_event') }}" class="btn btn-outline btn-sm gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+            {# Lucky Button #}
+            <a href="{{ path('random_event') }}" class="btn btn-lucky gap-2 group animate-fade-in delay-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                     class="w-5 h-5 group-hover:animate-sparkle">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z" />
                 </svg>
                 J'ai de la chance
+                <span class="text-lg group-hover:animate-bounce-subtle">&#x1F340;</span>
             </a>
         </div>
 
-        <form method="GET" action="{{ path('explore') }}" class="mb-8">
-            <div class="flex flex-col md:flex-row gap-4">
+        {# Search & Filters Form #}
+        <form method="GET" action="{{ path('explore') }}" class="mb-8 animate-fade-in delay-300">
+            {# The theme and period controls below are links, not form fields. Without these
+               the form would submit only 'q' and silently reset both filters to their
+               controller defaults ('all' / 'future'). 'page' is deliberately omitted so a
+               new search starts back at page 1. #}
+            <input type="hidden" name="theme" value="{{ theme }}">
+            <input type="hidden" name="period" value="{{ period }}">
+
+            <div class="flex flex-col lg:flex-row gap-4">
+                {# Search Input #}
                 <div class="flex-1">
-                    <div class="join w-full">
-                        <input type="text" name="q" value="{{ query }}" placeholder="Rechercher..."
-                               class="input input-bordered join-item w-full">
-                        <button type="submit" class="btn btn-primary join-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <div class="join w-full shadow-lg hover:shadow-xl transition-shadow rounded-lg">
+                        <div class="join-item flex items-center px-4 bg-base-200 rounded-l-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 opacity-50">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                            </svg>
+                        </div>
+                        <input type="text" name="q" value="{{ query }}"
+                               placeholder="Rechercher un événement..."
+                               class="input input-bordered join-item w-full search-input-animated focus:input-primary transition-all
+                                      placeholder:opacity-50 focus:placeholder:opacity-30">
+                        <button type="submit" class="btn btn-primary join-item group hover:scale-105 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                 class="w-5 h-5 group-hover:animate-pulse">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                             </svg>
                         </button>
                     </div>
                 </div>
 
-                <div class="flex flex-wrap gap-2">
-                    <select name="theme" class="select select-bordered" onchange="this.form.submit()">
-                        <option value="all" {{ theme == 'all' ? 'selected' : '' }}>Tous les thèmes</option>
-                        {% for key, themeData in themes %}
-                            <option value="{{ key }}" {{ theme == key ? 'selected' : '' }}>{{ themeData.emoji }} {{ themeData.label }}</option>
-                        {% endfor %}
-                    </select>
+                {# Filters #}
+                <div class="flex flex-wrap gap-3">
+                    {# Theme Dropdown #}
+                    <div class="dropdown dropdown-end">
+                        <div tabindex="0" role="button" class="btn btn-outline gap-2 min-w-40 justify-between">
+                            {% if theme != 'all' %}
+                                <span class="text-lg">{{ themes[theme].emoji }}</span>
+                                <span class="truncate max-w-20">{{ themes[theme].label }}</span>
+                            {% else %}
+                                <span>Tous les thèmes</span>
+                            {% endif %}
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                            </svg>
+                        </div>
+                        <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow-xl bg-base-100 rounded-box w-56 max-h-80 overflow-y-auto mt-2">
+                            <li>
+                                <a href="{{ path('explore', {q: query, theme: 'all', period: period}) }}"
+                                   class="{{ theme == 'all' ? 'active' : '' }}">
+                                    <span class="text-lg">&#x1F3A8;</span>
+                                    Tous les thèmes
+                                </a>
+                            </li>
+                            <li class="menu-title text-xs opacity-50 mt-2">Thèmes disponibles</li>
+                            {% for key, themeData in themes %}
+                            <li>
+                                <a href="{{ path('explore', {q: query, theme: key, period: period}) }}"
+                                   class="{{ theme == key ? 'active' : '' }} flex items-center gap-2">
+                                    <span class="text-xl">{{ themeData.emoji }}</span>
+                                    <span>{{ themeData.label }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
 
+                    {# Period Pills #}
                     <div class="join">
-                        <input type="radio" name="period" value="future" class="join-item btn btn-sm"
-                               aria-label="À venir" {{ period == 'future' ? 'checked' : '' }} onchange="this.form.submit()">
-                        <input type="radio" name="period" value="past" class="join-item btn btn-sm"
-                               aria-label="Passés" {{ period == 'past' ? 'checked' : '' }} onchange="this.form.submit()">
-                        <input type="radio" name="period" value="all" class="join-item btn btn-sm"
-                               aria-label="Tous" {{ period == 'all' ? 'checked' : '' }} onchange="this.form.submit()">
+                        <a href="{{ path('explore', {q: query, theme: theme, period: 'future'}) }}"
+                           class="join-item btn btn-sm {{ period == 'future' ? 'btn-primary' : 'btn-outline' }}
+                                  pagination-btn">
+                            <span class="hidden sm:inline">À venir</span>
+                            <span class="sm:hidden">&#x1F4C5;</span>
+                        </a>
+                        <a href="{{ path('explore', {q: query, theme: theme, period: 'past'}) }}"
+                           class="join-item btn btn-sm {{ period == 'past' ? 'btn-primary' : 'btn-outline' }}
+                                  pagination-btn">
+                            <span class="hidden sm:inline">Passés</span>
+                            <span class="sm:hidden">&#x2705;</span>
+                        </a>
+                        <a href="{{ path('explore', {q: query, theme: theme, period: 'all'}) }}"
+                           class="join-item btn btn-sm {{ period == 'all' ? 'btn-primary' : 'btn-outline' }}
+                                  pagination-btn">
+                            <span class="hidden sm:inline">Tous</span>
+                            <span class="sm:hidden">&#x1F30D;</span>
+                        </a>
                     </div>
                 </div>
             </div>
+
+            {# Active Filters as Chips #}
+            {% if query or theme != 'all' %}
+            <div class="flex flex-wrap gap-2 mt-4 animate-fade-in">
+                {% if query %}
+                <a href="{{ path('explore', {theme: theme, period: period}) }}"
+                   class="badge badge-lg badge-outline gap-2 hover:badge-error transition-colors group">
+                    <span class="opacity-70">Recherche:</span>
+                    "{{ query }}"
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                         class="w-3 h-3 opacity-50 group-hover:opacity-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                {% endif %}
+                {% if theme != 'all' %}
+                <a href="{{ path('explore', {q: query, theme: 'all', period: period}) }}"
+                   class="badge badge-lg badge-outline gap-2 hover:badge-error transition-colors group">
+                    <span class="text-base">{{ themes[theme].emoji }}</span>
+                    {{ themes[theme].label }}
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                         class="w-3 h-3 opacity-50 group-hover:opacity-100">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
         </form>
 
-        <p class="text-sm opacity-60 mb-4">{{ totalResults }} résultat{{ totalResults > 1 ? 's' : '' }}</p>
+        {# Results Count #}
+        <div class="flex items-center justify-between mb-6 animate-fade-in delay-400">
+            <p class="text-sm opacity-60 flex items-center gap-2">
+                <span class="font-mono bg-base-200 px-2 py-1 rounded">{{ totalResults }}</span>
+                résultat{{ totalResults > 1 ? 's' : '' }} trouvé{{ totalResults > 1 ? 's' : '' }}
+            </p>
+        </div>
 
         {% if events|length > 0 %}
+            {# Results Grid #}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
                 {% for event in events %}
-                    {{ _self.event_card(event, themes) }}
+                    {{ _self.event_card(event, themes, loop.index0) }}
                 {% endfor %}
             </div>
 
+            {# Pagination #}
             {% if totalPages > 1 %}
-                <div class="flex justify-center gap-2 mb-16">
-                    {% if page > 1 %}
-                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page - 1}) }}"
-                           class="btn btn-outline btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                            </svg>
-                        </a>
-                    {% endif %}
+            <div class="flex justify-center items-center gap-2 my-12 animate-fade-in">
+                {# Previous Button #}
+                {% if page > 1 %}
+                <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page - 1}) }}"
+                   class="btn btn-circle btn-outline btn-sm pagination-btn group">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                         class="w-4 h-4 transition-transform group-hover:-translate-x-0.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </a>
+                {% endif %}
 
+                {# Page Numbers #}
+                <div class="join">
                     {% for p in max(1, page - 2)..min(totalPages, page + 2) %}
-                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: p}) }}"
-                           class="btn btn-sm {{ p == page ? 'btn-primary' : 'btn-outline' }}">
+                    <a href="{{ path('explore', {q: query, theme: theme, period: period, page: p}) }}"
+                       class="join-item btn btn-sm {{ p == page ? 'btn-primary' : 'btn-ghost' }} pagination-btn">
+                        {% if p == page %}
+                        <span class="relative">
                             {{ p }}
-                        </a>
+                            <span class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-primary-content rounded-full"></span>
+                        </span>
+                        {% else %}
+                        {{ p }}
+                        {% endif %}
+                    </a>
                     {% endfor %}
-
-                    {% if page < totalPages %}
-                        <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page + 1}) }}"
-                           class="btn btn-outline btn-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                            </svg>
-                        </a>
-                    {% endif %}
                 </div>
+
+                {# Next Button #}
+                {% if page < totalPages %}
+                <a href="{{ path('explore', {q: query, theme: theme, period: period, page: page + 1}) }}"
+                   class="btn btn-circle btn-outline btn-sm pagination-btn group">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+                         class="w-4 h-4 transition-transform group-hover:translate-x-0.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </a>
+                {% endif %}
+            </div>
             {% endif %}
         {% else %}
-            <div class="text-center py-16">
-                <div class="text-6xl mb-4">🔍</div>
-                <p class="text-lg opacity-70 mb-4">Aucun événement trouvé</p>
-                <a href="{{ path('event_create') }}" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+            {# Empty State #}
+            <div class="text-center py-20 animate-fade-in">
+                <div class="relative inline-block mb-6">
+                    <div class="text-7xl empty-state-icon">&#x1F50D;</div>
+                    <div class="absolute -top-2 -right-2 text-3xl animate-ping opacity-70">&#x2753;</div>
+                </div>
+                <h3 class="text-2xl font-bold mb-2">Aucun événement trouvé</h3>
+                <p class="text-lg opacity-70 mb-8 max-w-md mx-auto">
+                    Pas de panique ! Vous pouvez créer le premier événement pour cette recherche.
+                </p>
+                <a href="{{ path('event_create') }}" class="btn btn-primary btn-lg btn-shine gap-2 group">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                         class="w-5 h-5 transition-transform group-hover:rotate-90">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
                     Créer le premier
@@ -107,27 +234,36 @@
     </div>
 {% endblock %}
 
-{% macro event_card(event, themes) %}
+{% macro event_card(event, themes, index = 0) %}
     {% set theme = themes[event.themeOrDefault] %}
     {% set now = date() %}
     {% set isPast = event.date < now %}
     {% set diff = event.date.diff(now) %}
 
     <a href="{{ path('event_view', {slug: event.slug}) }}"
-       class="card card-compact shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] overflow-hidden {{ isPast ? 'opacity-70' : '' }}">
-        <div class="theme-preview theme-{{ event.themeOrDefault }} p-6 min-h-32 flex flex-col justify-between">
+       class="card card-compact card-hover-lift shimmer-hover overflow-hidden animate-fade-in-up {{ isPast ? 'opacity-75' : '' }}"
+       style="animation-delay: {{ index * 80 }}ms;">
+        <div class="theme-preview theme-{{ event.themeOrDefault }} p-6 min-h-32 flex flex-col justify-between relative">
             <div class="flex justify-between items-start">
-                <span class="text-3xl">{{ theme.emoji }}</span>
+                {# Theme Emoji #}
+                <span class="text-3xl transition-transform hover:scale-125 hover:rotate-12 cursor-default">
+                    {{ theme.emoji }}
+                </span>
+
                 <div class="flex gap-2">
+                    {# Likes Badge #}
                     {% if event.likesCount > 0 %}
-                        <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0 gap-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3">
-                                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                            </svg>
-                            {{ event.likesCount }}
-                        </span>
+                    <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0 gap-1 transition-transform hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-3 h-3">
+                            <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+                        </svg>
+                        {{ event.likesCount }}
+                    </span>
                     {% endif %}
-                    <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0">
+
+                    {# Time Badge #}
+                    <span class="badge badge-ghost bg-white/20 backdrop-blur-sm text-white border-0
+                                 {% if not isPast and diff.days <= 1 %}animate-pulse bg-warning/40{% endif %}">
                         {% if isPast %}
                             {% if diff.days == 0 %}
                                 Aujourd'hui
@@ -138,9 +274,9 @@
                             {% endif %}
                         {% else %}
                             {% if diff.days == 0 %}
-                                Aujourd'hui
+                                <span class="mr-1">&#x1F525;</span> Aujourd'hui
                             {% elseif diff.days == 1 %}
-                                Demain
+                                <span class="mr-1">&#x26A1;</span> Demain
                             {% else %}
                                 {{ diff.days }}j
                             {% endif %}
@@ -148,9 +284,15 @@
                     </span>
                 </div>
             </div>
+
             <div>
                 <h3 class="card-title text-lg mt-4 line-clamp-2">{{ event.label }}</h3>
-                <p class="text-xs opacity-70 mt-1">{{ event.date|date('d/m/Y H:i') }}</p>
+                <p class="text-xs opacity-70 mt-1 flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                    </svg>
+                    {{ event.date|date('d/m/Y H:i') }}
+                </p>
             </div>
         </div>
     </a>
